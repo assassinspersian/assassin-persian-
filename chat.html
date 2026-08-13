@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>ASSASSIN CHAT</title>
+
+<style>
+body{
+margin:0;
+font-family:tahoma;
+background:#050505;
+color:white;
+}
+
+.header{
+height:60px;
+background:#111;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+border-bottom:1px solid gold;
+}
+
+.logo{
+color:#ffd85a;
+font-size:22px;
+}
+
+.profile{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.profile img{
+width:45px;
+height:45px;
+border-radius:50%;
+object-fit:cover;
+}
+
+.chat{
+height:calc(100vh - 120px);
+padding:15px;
+overflow:auto;
+}
+
+.msg{
+background:#222;
+padding:10px;
+border-radius:15px;
+margin:10px;
+max-width:70%;
+}
+
+.me{
+background:#5b1825;
+margin-right:auto;
+}
+
+.bottom{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+background:#111;
+padding:10px;
+display:flex;
+gap:10px;
+}
+
+input{
+flex:1;
+background:#222;
+color:white;
+border:1px solid #555;
+padding:12px;
+border-radius:20px;
+}
+
+button{
+background:#d5a928;
+border:0;
+padding:10px 20px;
+border-radius:20px;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="header">
+
+<div class="logo">
+ASSASSIN CHAT
+</div>
+
+
+<div class="profile">
+
+<img id="avatar"
+src="https://i.imgur.com/8Km9tLL.png">
+
+<span id="username">
+کاربر
+</span>
+
+</div>
+
+</div>
+
+
+
+<div class="chat" id="chat">
+
+<div class="msg">
+سلام 👋 به ASSASSIN CHAT خوش آمدید
+</div>
+
+
+</div>
+
+
+
+<div class="bottom">
+
+<input id="message"
+placeholder="پیام بنویس...">
+
+
+<button onclick="send()">
+ارسال
+</button>
+
+</div>
+
+
+
+
+<script>
+
+let chat =
+document.getElementById("chat");
+
+
+function send(){
+
+let text=
+document.getElementById("message").value;
+
+
+if(text=="")return;
+
+
+let div=
+document.createElement("div");
+
+
+div.className="msg me";
+
+div.innerHTML=text;
+
+
+chat.appendChild(div);
+
+
+document.getElementById("message").value="";
+
+
+chat.scrollTop=
+chat.scrollHeight;
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
