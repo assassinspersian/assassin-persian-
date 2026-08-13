@@ -1,0 +1,306 @@
+!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ASSASSIN PERSIAN</title>
+<meta name="description" content="شعر، همدلی، کمک مردمی و گفت‌وگو">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#f3cf55;--gold2:#c89d24;--red:#6b101b;--red2:#2a050a;--black:#020202}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Naskh Arabic",Tahoma,Arial,sans-serif;background:#000;color:#fff;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-3;background:linear-gradient(90deg,rgba(0,0,0,.84),rgba(35,0,5,.42)),url("background.png") center/cover no-repeat}
+body:after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;background:radial-gradient(circle at 50% 25%,rgba(255,210,70,.07),transparent 35%)}
+header{height:58px;position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:0 3%;background:rgba(0,0,0,.86);border-bottom:1px solid rgba(243,207,85,.45);backdrop-filter:blur(10px)}
+.logo{font-family:Georgia,serif;font-size:25px;letter-spacing:1px;color:var(--gold);direction:ltr}
+nav{display:flex;gap:8px}
+nav a{color:#fff;text-decoration:none;padding:9px 14px;border-radius:6px;font-size:14px;transition:.2s}
+nav a:hover,nav a.active{color:#111;background:var(--gold)}
+main{padding-top:58px}
+.screen{min-height:calc(100vh - 58px);display:none;padding:22px 1.5%;align-items:center;justify-content:center}
+.screen.active{display:flex;animation:in .45s ease}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.home-card{width:100%;max-width:1180px;min-height:calc(100vh - 105px);display:grid;grid-template-columns:46% 54%;align-items:center;border:1px solid var(--gold2);background:linear-gradient(135deg,rgba(40,0,5,.88),rgba(75,5,12,.72));box-shadow:0 0 70px rgba(0,0,0,.7);position:relative;overflow:hidden}
+.home-card:before{content:"";position:absolute;inset:10px;border:1px solid rgba(243,207,85,.24);pointer-events:none}
+.art-wrap{height:100%;display:flex;align-items:center;justify-content:center;padding:30px}
+.art-wrap img{width:min(100%,520px);max-height:78vh;object-fit:contain;filter:drop-shadow(0 16px 35px #000)}
+.poem-wrap{text-align:center;padding:40px 50px 40px 35px;position:relative}
+.poem-wrap:after{content:"";position:absolute;left:0;right:0;bottom:14%;height:1px;background:linear-gradient(90deg,transparent,rgba(243,207,85,.55),transparent)}
+.poem{font-family:"Noto Nastaliq Urdu","Noto Naskh Arabic",serif;color:#ffe57a;font-size:clamp(28px,3.4vw,48px);line-height:2.05;text-shadow:0 3px 15px #000;white-space:pre-line;margin-bottom:24px}
+.ornament{color:var(--gold);font-size:27px;letter-spacing:12px;margin:8px 0}
+.translation{direction:ltr;text-align:center;color:#f5e9bb;font-family:Georgia,"Times New Roman",serif;font-size:clamp(16px,1.65vw,22px);line-height:1.8;max-width:700px;margin:auto}
+.patriot{margin-top:30px;color:#ffe17a;font-size:clamp(18px,2vw,27px);font-weight:700}
+.home-actions{margin-top:30px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{border:1px solid var(--gold);background:linear-gradient(135deg,#8e202d,#4b0a12);color:#fff;padding:11px 25px;border-radius:8px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(243,207,85,.18)}
+.btn.secondary{background:transparent;color:var(--gold)}
+.panel{width:min(900px,100%);background:rgba(3,3,3,.91);border:1px solid rgba(243,207,85,.5);border-radius:10px;padding:30px;box-shadow:0 25px 80px #000}
+.title{text-align:center;color:var(--gold);font-size:34px;margin-bottom:7px}
+.sub{text-align:center;color:#aaa;line-height:1.9;margin-bottom:25px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.full{grid-column:1/-1}
+label{display:block;margin-bottom:6px;color:#eee}
+input,textarea{width:100%;background:#0c0c0c;border:1px solid #51323a;border-radius:8px;padding:12px;color:#fff;font:inherit;outline:none}
+input:focus,textarea:focus{border-color:var(--gold)}
+textarea{min-height:105px;resize:vertical}
+.notice{margin:18px 0;background:#211014;border-right:4px solid var(--gold);padding:13px 16px;line-height:1.9;color:#ddd}
+.check{display:flex;gap:9px;align-items:flex-start;color:#bbb;margin:15px 0}
+.check input{width:auto;margin-top:7px}
+.signature{width:100%;height:150px;background:#fff;border-radius:8px;touch-action:none}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px}
+.small{color:#aaa;font-size:13px;text-align:center;margin-top:10px}
+#joinMsg,#payMsg{color:var(--gold)}
+/* black star transition */
+#gate{position:fixed;inset:0;background:#000;z-index:100;display:none;overflow:hidden}
+#gate.show{display:block}
+.gate-title{position:absolute;top:44%;left:0;right:0;text-align:center;color:#ddd;font-size:20px;opacity:0;animation:textIn .8s .25s forwards}
+.gate-sub{position:absolute;top:50%;left:0;right:0;text-align:center;color:#777;font-size:14px;opacity:0;animation:textIn .8s .4s forwards}
+@keyframes textIn{to{opacity:1}}
+.star{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 16px 6px rgba(255,255,255,.9);animation:star .9s cubic-bezier(.2,.9,.2,1) forwards}
+@keyframes star{0%{transform:scale(0);opacity:0}35%{transform:scale(2.2);opacity:1}100%{transform:scale(1);opacity:.95}}
+/* galaxy */
+.galaxy-panel{width:min(1100px,100%);height:min(82vh,760px);background:#000;border:1px solid rgba(243,207,85,.65);position:relative;overflow:hidden}
+.galaxy-panel:before{content:"";position:absolute;inset:0;background:
+radial-gradient(ellipse at 50% 52%,rgba(145,88,255,.45) 0 7%,rgba(61,31,125,.28) 14%,transparent 38%),
+radial-gradient(ellipse at 52% 52%,rgba(255,180,90,.28) 0 3%,transparent 25%),
+radial-gradient(circle at 12% 20%,#fff 0 1px,transparent 1.5px),
+radial-gradient(circle at 73% 14%,#fff 0 1px,transparent 1.5px),
+radial-gradient(circle at 87% 72%,#fff 0 1px,transparent 1.5px),
+radial-gradient(circle at 25% 80%,#fff 0 1px,transparent 1.5px);
+background-size:auto,auto,120px 120px,170px 170px,210px 210px,190px 190px;opacity:.95}
+.galaxy-title{position:relative;z-index:2;text-align:center;color:var(--gold);font-size:27px;padding-top:28px}
+.counter{position:absolute;z-index:4;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center}
+.counter strong{display:block;font-family:Georgia,serif;font-size:clamp(65px,10vw,120px);color:#f5d56a;text-shadow:0 0 28px rgba(243,207,85,.3)}
+.counter span{font-size:17px;color:#ddd}
+.gstar{position:absolute;z-index:2;width:2px;height:2px;background:#fff;border-radius:50%;box-shadow:0 0 6px #fff;animation:twinkle 2.3s infinite alternate}
+@keyframes twinkle{to{opacity:.3;transform:scale(.65)}}
+.planet{position:absolute;left:50%;top:50%;width:52%;height:20%;transform:translate(-50%,-50%) rotate(-12deg);border:1px solid rgba(220,180,255,.18);border-radius:50%;box-shadow:0 0 45px rgba(170,100,255,.12)}
+/* chat */
+.chat-layout{width:min(1050px,100%);display:grid;grid-template-columns:220px 1fr;gap:10px;direction:ltr}
+.users,.chat-panel{background:#050505;border:1px solid rgba(243,207,85,.42);border-radius:9px}
+.users{padding:18px;direction:rtl}
+.users h3{color:#ddd;margin-bottom:15px}
+.user{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid #1d1d1d;color:#bbb}
+.dot{width:9px;height:9px;border-radius:50%;background:#1bc85a;box-shadow:0 0 8px #1bc85a}
+.chat-panel{padding:14px;direction:rtl}
+.chat-head{color:var(--gold);border-bottom:1px solid #2b2222;padding:7px 5px 12px;margin-bottom:12px}
+.chatbox{height:390px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding:5px}
+.msg{max-width:80%;background:#151515;border-radius:12px;padding:9px 13px;color:#eee;line-height:1.8;align-self:flex-start}
+.msg.me{align-self:flex-end;background:#581725;color:#fff1b5}
+.chat-row{display:flex;gap:8px;margin-top:12px}.chat-row input{flex:1}
+footer{text-align:center;color:#777;padding:25px;background:#000;border-top:1px solid rgba(243,207,85,.18);font-size:12px}
+@media(max-width:800px){
+ header{height:auto;min-height:58px;flex-direction:column;gap:3px;padding:7px 2%}.logo{font-size:18px}nav{justify-content:center;flex-wrap:wrap}nav a{font-size:12px;padding:5px 8px}main{padding-top:90px}.screen{min-height:calc(100vh - 90px)}
+ .home-card{grid-template-columns:1fr;min-height:auto}.art-wrap{padding:18px 25px}.art-wrap img{max-height:48vh}.poem-wrap{padding:20px 20px 35px}.poem{font-size:27px}.translation{font-size:16px}.patriot{font-size:18px}
+ .form-grid{grid-template-columns:1fr}.full{grid-column:auto}.chat-layout{grid-template-columns:1fr}.users{order:2}.chat-panel{order:1}.chatbox{height:350px}
+}
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div id="gateStars"></div>
+  <div class="gate-title">در حال پیوستن...</div>
+  <div class="gate-sub">یک ستاره برای هر همراه</div>
+</div>
+
+<header>
+  <div class="logo">ASSASSIN PERSIAN</div>
+  <nav>
+    <a href="#home" data-page="home" class="active">خانه</a>
+    <a href="#join" data-page="join">پیوستن</a>
+    <a href="#support" data-page="support">همراهان</a>
+    <a href="#chat" data-page="chat">چت</a>
+  </nav>
+</header>
+
+<main>
+<section id="home" class="screen active">
+  <div class="home-card">
+    <div class="art-wrap"><img src="background.png" alt="نقش طلایی سنتی"></div>
+    <div class="poem-wrap">
+      <div class="ornament">✦</div>
+      <div class="poem">عقاب شکاری نترسد ز بوم
+دومرد خراسان دوسد مرد روم
+اگر دست یزدان دهد رونقم
+به اسکندریه زنم بیرقم</div>
+      <div class="ornament">◇</div>
+      <div class="translation">
+        The hunting eagle fears not the owl;<br>
+        Two men from Khorasan, two hundred men of Rome.<br>
+        If the hand of Yazdan grants me prosperity,<br>
+        I will raise my banner in Alexandria.
+      </div>
+      <div class="patriot">✦ برای آدم‌های میهن‌پرست و کمک مردمی ✦</div>
+      <div class="home-actions">
+        <button class="btn" data-go="join">پیوستن</button>
+        <button class="btn secondary" data-go="support">تعداد همراهان</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="join" class="screen">
+  <div class="panel">
+    <h2 class="title">پیوستن</h2>
+    <p class="sub">برای حفظ حریم خصوصی، فقط اطلاعات پایه دریافت می‌شود.</p>
+    <form id="joinForm">
+      <div class="form-grid">
+        <div><label for="name">نام</label><input id="name" maxlength="100" required></div>
+        <div><label for="reason">دلیل پیوستن</label><input id="reason" maxlength="300" required></div>
+        <div class="full"><label for="message">پیام شما</label><textarea id="message" maxlength="1000" placeholder="چند جمله برای جمع بنویسید..."></textarea></div>
+      </div>
+      <div class="notice"><b>تعهدنامه</b><br>من متعهد می‌شوم قوانین سایت را رعایت کنم، به دیگران احترام بگذارم، از اطلاعات خصوصی افراد سوءاستفاده نکنم و در فعالیت‌های غیرقانونی یا خشونت‌آمیز شرکت نکنم.</div>
+      <label class="check"><input type="checkbox" id="agree" required><span>متن تعهدنامه و سیاست حریم خصوصی را خواندم و موافقم.</span></label>
+      <label>امضای آنلاین</label>
+      <canvas id="signature" class="signature"></canvas>
+      <div class="actions">
+        <button type="button" class="btn secondary" id="clear">پاک کردن امضا</button>
+        <button type="submit" class="btn">ثبت پیوستن</button>
+      </div>
+      <p id="joinMsg" class="small"></p>
+    </form>
+  </div>
+</section>
+
+<section id="support" class="screen">
+  <div class="panel">
+    <h2 class="title">کمک مردمی و همراهان</h2>
+    <p class="sub">هر همراه یک ستاره به آسمان اضافه می‌کند.</p>
+    <div style="text-align:center;margin:20px 0">
+      <div style="font-family:Georgia,serif;font-size:88px;color:var(--gold)" id="supportCount">0</div>
+      <div style="color:#bbb">تعداد همراهان</div>
+    </div>
+    <div class="actions"><button class="btn" data-go="join">پیوستن و ساختن یک ستاره</button></div>
+  </div>
+</section>
+
+<section id="galaxy" class="screen">
+  <div class="galaxy-panel">
+    <div class="galaxy-title">تعداد همراهان</div>
+    <div id="galaxyStars"></div>
+    <div class="planet"></div>
+    <div class="counter"><strong id="count">0</strong><span>ستاره در کهکشان ما</span></div>
+  </div>
+</section>
+
+<section id="chat" class="screen">
+  <div class="chat-layout">
+    <aside class="users">
+      <h3>کاربران آنلاین <span style="color:#1bc85a">●</span></h3>
+      <div class="user"><span class="dot"></span> Assassin Persian</div>
+      <div class="user"><span class="dot"></span> همراه</div>
+      <div class="user"><span class="dot"></span> دوست</div>
+      <div class="user"><span class="dot"></span> ایران</div>
+    </aside>
+    <div class="chat-panel">
+      <div class="chat-head">اتاق گفت‌وگو</div>
+      <div id="chatbox" class="chatbox"></div>
+      <div class="chat-row">
+        <input id="chatInput" maxlength="500" placeholder="پیام خود را بنویسید...">
+        <button id="sendChat" class="btn">ارسال</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 ASSASSIN PERSIAN — این نسخه نمایشی است؛ برای استفاده واقعی چت و شمارنده باید به سرور امن متصل شوند.</footer>
+
+<script>
+const pages=[...document.querySelectorAll(".screen")];
+const nav=[...document.querySelectorAll("nav a[data-page]")];
+
+function showPage(id){
+  const target=document.getElementById(id)||document.getElementById("home");
+  pages.forEach(p=>p.classList.toggle("active",p===target));
+  nav.forEach(a=>a.classList.toggle("active",a.dataset.page===target.id));
+  history.replaceState(null,"","#"+target.id);
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(target.id==="support") updateCount();
+  if(target.id==="galaxy") renderGalaxy();
+}
+nav.forEach(a=>a.addEventListener("click",e=>{e.preventDefault();showPage(a.dataset.page)}));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.go)));
+
+function count(){return Number(localStorage.getItem("assassinPersianCount")||0)}
+function updateCount(){document.getElementById("supportCount").textContent=count().toLocaleString("fa-IR");document.getElementById("count").textContent=count().toLocaleString("fa-IR")}
+
+/* signature */
+const canvas=document.getElementById("signature"),ctx=canvas.getContext("2d");
+let drawing=false,hasSignature=false;
+function resizeCanvas(){const r=canvas.getBoundingClientRect(),d=window.devicePixelRatio||1;canvas.width=r.width*d;canvas.height=r.height*d;ctx.setTransform(d,0,0,d,0,0);ctx.strokeStyle="#111";ctx.lineWidth=2.2;ctx.lineCap="round"}
+function point(e){const r=canvas.getBoundingClientRect(),p=e.touches?e.touches[0]:e;return[p.clientX-r.left,p.clientY-r.top]}
+function start(e){drawing=true;hasSignature=true;ctx.beginPath();ctx.moveTo(...point(e));e.preventDefault()}
+function move(e){if(!drawing)return;ctx.lineTo(...point(e));ctx.stroke();e.preventDefault()}
+function end(){drawing=false}
+resizeCanvas();window.addEventListener("resize",resizeCanvas);
+canvas.addEventListener("mousedown",start);canvas.addEventListener("mousemove",move);window.addEventListener("mouseup",end);
+canvas.addEventListener("touchstart",start,{passive:false});canvas.addEventListener("touchmove",move,{passive:false});canvas.addEventListener("touchend",end);
+document.getElementById("clear").onclick=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);hasSignature=false};
+
+/* join -> black screen -> one star -> galaxy */
+document.getElementById("joinForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  if(!hasSignature){alert("لطفاً ابتدا امضای آنلاین خود را ثبت کنید.");return}
+  localStorage.setItem("assassinPersianCount",String(count()+1));
+  document.getElementById("joinMsg").textContent="پیوستن ثبت شد.";
+  showGate();
+});
+
+function showGate(){
+  const gate=document.getElementById("gate"),box=document.getElementById("gateStars");
+  box.innerHTML="";
+  gate.classList.add("show");
+  const s=document.createElement("i");s.className="star";
+  s.style.left=(12+Math.random()*76)+"%";s.style.top=(15+Math.random()*70)+"%";
+  box.appendChild(s);
+  setTimeout(()=>{gate.classList.remove("show");renderGalaxy();showPage("galaxy")},1900);
+}
+
+function renderGalaxy(){
+  updateCount();
+  const box=document.getElementById("galaxyStars");box.innerHTML="";
+  const total=Math.min(360,Math.max(90,count()+90));
+  for(let i=0;i<total;i++){
+    const s=document.createElement("i");s.className="gstar";
+    const r=Math.random();
+    s.style.left=(4+r*92)+"%";s.style.top=(4+Math.random()*92)+"%";
+    const z=(Math.random()*2.4+0.7)+"px";s.style.width=z;s.style.height=z;
+    s.style.animationDelay=(-Math.random()*2.3)+"s";
+    box.appendChild(s);
+  }
+}
+
+/* local demo chat */
+const chatbox=document.getElementById("chatbox");
+function loadChat(){
+  let data=[];
+  try{data=JSON.parse(localStorage.getItem("assassinPersianChat")||"[]")}catch{}
+  if(!data.length)data=[{me:false,text:"سلام دوستان، خوشحالم که اینجا هستیم."},{me:false,text:"همدلی و کمک به همنوعان مهم است."}];
+  chatbox.innerHTML="";
+  data.forEach(m=>addMsg(m.text,m.me,false));
+}
+function addMsg(text,me,save=true){
+  const d=document.createElement("div");d.className="msg"+(me?" me":"");d.textContent=text;chatbox.appendChild(d);chatbox.scrollTop=chatbox.scrollHeight;
+  if(save){let data=[];try{data=JSON.parse(localStorage.getItem("assassinPersianChat")||"[]")}catch{}data.push({text,me});localStorage.setItem("assassinPersianChat",JSON.stringify(data.slice(-100)))}
+}
+function sendChat(){
+  const input=document.getElementById("chatInput"),text=input.value.trim();if(!text)return;
+  addMsg(text,true);input.value="";
+}
+document.getElementById("sendChat").onclick=sendChat;
+document.getElementById("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat()});
+
+window.addEventListener("load",()=>{
+  const id=location.hash.slice(1);
+  if(id&&document.getElementById(id))showPage(id);else showPage("home");
+  updateCount();loadChat();
+});
+</script>
+</body>
+</html>
