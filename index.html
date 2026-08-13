@@ -382,6 +382,22 @@ window.addEventListener("load",()=>{
   if(id&&document.getElementById(id))showPage(id);else showPage("home");
   updateCount();loadChat();
 });
+ let total = localStorage.getItem("supportMoney") || 0;
+
+document.getElementById("totalAmount").innerHTML =
+Number(total).toLocaleString("fa-IR") + " تومان";
+
+
+function addSupport(amount){
+
+total = Number(total) + amount;
+
+localStorage.setItem("supportMoney", total);
+
+document.getElementById("totalAmount").innerHTML =
+total.toLocaleString("fa-IR") + " تومان";
+
+ }
 </script>
 </body>
 </html>
