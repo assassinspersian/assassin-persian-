@@ -2675,7 +2675,24 @@ window.addEventListener(
   }
 );
 
-</script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
 
+  const firebaseConfig = {
+    apiKey: "AIzaSyAYeilmvrX0Kw8U6HS5GdwMSs1kKcUFrLU",
+    authDomain: "assassin-persian.firebaseapp.com",
+    projectId: "assassin-persian",
+    storageBucket: "assassin-persian.firebasestorage.app",
+    messagingSenderId: "478104867850",
+    appId: "1:478104867850:web:ff8812eda94d3b605dbbf3",
+    measurementId: "G-SCBQVCJ77K"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+  console.log("Firebase وصل شد");
+</script>
 </body>
 </html>
