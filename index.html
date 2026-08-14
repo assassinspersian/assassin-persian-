@@ -12,8 +12,6 @@
 <meta name="description"
       content="شعر، همدلی، کمک مردمی و گفت‌وگو">
 
-<link rel="stylesheet" href="style.css">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -22,6 +20,10 @@
 
 <style>
 
+/* =========================
+   VARIABLES
+========================= */
+
 :root{
   --gold:#f3cf55;
   --gold2:#c89d24;
@@ -29,6 +31,10 @@
   --red2:#2a050a;
   --black:#020202;
 }
+
+/* =========================
+   RESET
+========================= */
 
 *{
   box-sizing:border-box;
@@ -45,23 +51,27 @@ body{
   background:#000;
   color:#fff;
   overflow-x:hidden;
+  min-height:100vh;
 }
 
-body:before{
+/* Background */
+
+body::before{
   content:"";
   position:fixed;
   inset:0;
   z-index:-3;
+
   background:
     linear-gradient(
       90deg,
-      rgba(0,0,0,.84),
-      rgba(35,0,5,.42)
+      rgba(0,0,0,.88),
+      rgba(35,0,5,.55)
     ),
     url("background.png") center/cover no-repeat;
 }
 
-body:after{
+body::after{
   content:"";
   position:fixed;
   inset:0;
@@ -71,45 +81,59 @@ body:after{
   background:
     radial-gradient(
       circle at 50% 25%,
-      rgba(255,210,70,.07),
+      rgba(255,210,70,.08),
       transparent 35%
     );
 }
 
-/* CREATOR */
+/* =========================
+   CREATOR
+========================= */
 
 .creator{
   text-align:center;
   padding-top:75px;
-  padding-bottom:10px;
-  background:rgba(0,0,0,.75);
+  padding-bottom:12px;
+
+  background:rgba(0,0,0,.72);
+
+  color:var(--gold);
+
+  font-size:20px;
+  font-weight:bold;
+
+  position:relative;
+  z-index:5;
 }
 
 .creator-img{
   width:90px;
   height:90px;
-  border-radius:50%;
-  object-fit:cover;
-  border:3px solid gold;
-}
 
-.creator{
-  font-size:20px;
-  font-weight:bold;
-  color:gold;
+  border-radius:50%;
+
+  object-fit:cover;
+
+  border:3px solid var(--gold);
+
+  box-shadow:
+    0 0 20px rgba(243,207,85,.35);
 }
 
 .creator span{
   font-size:14px;
-  color:white;
+  color:#fff;
 }
 
-/* HEADER */
+/* =========================
+   HEADER
+========================= */
 
 header{
   height:58px;
 
   position:fixed;
+
   top:0;
   left:0;
   right:0;
@@ -117,25 +141,33 @@ header{
   z-index:50;
 
   display:flex;
+
   align-items:center;
   justify-content:space-between;
 
   padding:0 3%;
 
-  background:rgba(0,0,0,.90);
+  background:rgba(0,0,0,.92);
 
   border-bottom:
-    1px solid rgba(243,207,85,.45);
+    1px solid
+    rgba(243,207,85,.45);
 
   backdrop-filter:blur(10px);
 }
 
 .logo{
   font-family:Georgia,serif;
+
   font-size:25px;
+
   letter-spacing:1px;
+
   color:var(--gold);
+
   direction:ltr;
+
+  white-space:nowrap;
 }
 
 nav{
@@ -145,6 +177,7 @@ nav{
 
 nav a{
   color:#fff;
+
   text-decoration:none;
 
   padding:9px 14px;
@@ -162,18 +195,22 @@ nav a.active{
   background:var(--gold);
 }
 
-/* MAIN */
+/* =========================
+   MAIN
+========================= */
 
 main{
-  padding-top:58px;
+  padding-top:0;
 }
 
 .screen{
-  min-height:calc(100vh - 58px);
+  min-height:100vh;
 
   display:none;
 
-  padding:22px 1.5%;
+  padding:
+    25px 1.5%
+    40px;
 
   align-items:center;
   justify-content:center;
@@ -181,10 +218,13 @@ main{
 
 .screen.active{
   display:flex;
-  animation:in .45s ease;
+
+  animation:
+    pageIn .45s ease;
 }
 
-@keyframes in{
+@keyframes pageIn{
+
   from{
     opacity:0;
     transform:translateY(12px);
@@ -194,41 +234,55 @@ main{
     opacity:1;
     transform:none;
   }
+
 }
 
-/* HOME */
+/* =========================
+   HOME
+========================= */
+
+#home{
+  padding-top:110px;
+}
 
 .home-card{
   width:100%;
+
   max-width:1180px;
 
-  min-height:calc(100vh - 105px);
+  min-height:calc(100vh - 150px);
 
   display:grid;
+
   grid-template-columns:46% 54%;
 
   align-items:center;
 
-  border:1px solid var(--gold2);
+  border:
+    1px solid
+    var(--gold2);
 
   background:
     linear-gradient(
       135deg,
-      rgba(40,0,5,.88),
-      rgba(75,5,12,.72)
+      rgba(40,0,5,.90),
+      rgba(75,5,12,.75)
     );
 
-  box-shadow:0 0 70px rgba(0,0,0,.7);
+  box-shadow:
+    0 0 70px
+    rgba(0,0,0,.7);
 
   position:relative;
 
   overflow:hidden;
 }
 
-.home-card:before{
+.home-card::before{
   content:"";
 
   position:absolute;
+
   inset:10px;
 
   border:
@@ -238,10 +292,13 @@ main{
   pointer-events:none;
 }
 
+/* Artwork */
+
 .art-wrap{
   height:100%;
 
   display:flex;
+
   align-items:center;
   justify-content:center;
 
@@ -255,8 +312,13 @@ main{
 
   object-fit:contain;
 
-  filter:drop-shadow(0 16px 35px #000);
+  filter:
+    drop-shadow(
+      0 16px 35px #000
+    );
 }
+
+/* Poem */
 
 .poem-wrap{
   text-align:center;
@@ -270,7 +332,7 @@ main{
   position:relative;
 }
 
-.poem-wrap:after{
+.poem-wrap::after{
   content:"";
 
   position:absolute;
@@ -304,7 +366,8 @@ main{
 
   line-height:2.05;
 
-  text-shadow:0 3px 15px #000;
+  text-shadow:
+    0 3px 15px #000;
 
   white-space:pre-line;
 
@@ -366,11 +429,14 @@ main{
   flex-wrap:wrap;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
 
 .btn{
   border:
-    1px solid var(--gold);
+    1px solid
+    var(--gold);
 
   background:
     linear-gradient(
@@ -409,12 +475,15 @@ main{
   color:var(--gold);
 }
 
-/* PANEL */
+/* =========================
+   PANEL
+========================= */
 
 .panel{
   width:min(900px,100%);
 
-  background:rgba(3,3,3,.91);
+  background:
+    rgba(3,3,3,.94);
 
   border:
     1px solid
@@ -448,7 +517,9 @@ main{
   margin-bottom:25px;
 }
 
-/* FORM */
+/* =========================
+   FORM
+========================= */
 
 .form-grid{
   display:grid;
@@ -576,7 +647,9 @@ textarea{
   color:var(--gold);
 }
 
-/* GATE */
+/* =========================
+   GATE
+========================= */
 
 #gate{
   position:fixed;
@@ -637,9 +710,11 @@ textarea{
 }
 
 @keyframes textIn{
+
   to{
     opacity:1;
   }
+
 }
 
 .star{
@@ -663,6 +738,7 @@ textarea{
 }
 
 @keyframes star{
+
   0%{
     transform:scale(0);
     opacity:0;
@@ -677,9 +753,12 @@ textarea{
     transform:scale(1);
     opacity:.95;
   }
+
 }
 
-/* GALAXY */
+/* =========================
+   GALAXY
+========================= */
 
 .galaxy-panel{
   width:min(1100px,100%);
@@ -697,7 +776,7 @@ textarea{
   overflow:hidden;
 }
 
-.galaxy-panel:before{
+.galaxy-panel::before{
   content:"";
 
   position:absolute;
@@ -729,13 +808,27 @@ textarea{
       circle at 73% 14%,
       #fff 0 1px,
       transparent 1.5px
+    ),
+
+    radial-gradient(
+      circle at 87% 72%,
+      #fff 0 1px,
+      transparent 1.5px
+    ),
+
+    radial-gradient(
+      circle at 25% 80%,
+      #fff 0 1px,
+      transparent 1.5px
     );
 
   background-size:
     auto,
     auto,
     120px 120px,
-    170px 170px;
+    170px 170px,
+    210px 210px,
+    190px 190px;
 
   opacity:.95;
 }
@@ -801,17 +894,21 @@ textarea{
 
   border-radius:50%;
 
-  box-shadow:0 0 6px #fff;
+  box-shadow:
+    0 0 6px #fff;
 
   animation:
-    twinkle 2.3s infinite alternate;
+    twinkle 2.3s
+    infinite alternate;
 }
 
 @keyframes twinkle{
+
   to{
     opacity:.3;
     transform:scale(.65);
   }
+
 }
 
 .planet{
@@ -838,7 +935,9 @@ textarea{
     rgba(170,100,255,.12);
 }
 
-/* CHAT */
+/* =========================
+   CHAT
+========================= */
 
 .chat-layout{
   width:min(1050px,100%);
@@ -846,4 +945,1737 @@ textarea{
   display:grid;
 
   grid-template-columns:
-   
+    220px 1fr;
+
+  gap:10px;
+
+  direction:ltr;
+}
+
+.users,
+.chat-panel{
+  background:#050505;
+
+  border:
+    1px solid
+    rgba(243,207,85,.42);
+
+  border-radius:9px;
+}
+
+.users{
+  padding:18px;
+
+  direction:rtl;
+}
+
+.users h3{
+  color:#ddd;
+
+  margin-bottom:15px;
+}
+
+.user{
+  display:flex;
+
+  align-items:center;
+
+  gap:9px;
+
+  padding:9px 0;
+
+  border-bottom:
+    1px solid
+    #1d1d1d;
+
+  color:#bbb;
+}
+
+.dot{
+  width:9px;
+  height:9px;
+
+  border-radius:50%;
+
+  background:#1bc85a;
+
+  box-shadow:
+    0 0 8px
+    #1bc85a;
+}
+
+.chat-panel{
+  padding:14px;
+
+  direction:rtl;
+}
+
+.chat-head{
+  color:var(--gold);
+
+  border-bottom:
+    1px solid
+    #2b2222;
+
+  padding:
+    7px
+    5px
+    12px;
+
+  margin-bottom:12px;
+}
+
+.chatbox{
+  height:390px;
+
+  overflow-y:auto;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+  padding:5px;
+}
+
+.msg{
+  max-width:80%;
+
+  background:#151515;
+
+  border-radius:12px;
+
+  padding:9px 13px;
+
+  color:#eee;
+
+  line-height:1.8;
+
+  align-self:flex-start;
+
+  word-break:break-word;
+}
+
+.msg.me{
+  align-self:flex-end;
+
+  background:#581725;
+
+  color:#fff1b5;
+}
+
+.chat-row{
+  display:flex;
+
+  gap:8px;
+
+  margin-top:12px;
+}
+
+.chat-row input{
+  flex:1;
+}
+
+/* =========================
+   PAYMENT
+========================= */
+
+.payment-box{
+  width:min(900px,100%);
+
+  text-align:center;
+}
+
+.payment-title{
+  color:var(--gold);
+
+  font-size:28px;
+
+  margin-bottom:20px;
+}
+
+.pay-buttons{
+  display:flex;
+
+  justify-content:center;
+
+  flex-wrap:wrap;
+
+  gap:10px;
+
+  margin-bottom:25px;
+}
+
+.pay-btn{
+  background:
+    linear-gradient(
+      135deg,
+      #f3c55f,
+      #c89d24
+    );
+
+  border:none;
+
+  color:#111;
+
+  padding:12px 25px;
+
+  border-radius:10px;
+
+  font-size:16px;
+
+  font-family:inherit;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  transition:.2s;
+}
+
+.pay-btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+    0 6px 20px
+    rgba(243,207,85,.25);
+}
+
+.total-box{
+  background:#100607;
+
+  border:
+    1px solid
+    rgba(243,207,85,.35);
+
+  border-radius:10px;
+
+  padding:20px;
+
+  margin-bottom:25px;
+}
+
+.total-box h3{
+  color:#ddd;
+
+  margin-bottom:10px;
+}
+
+#totalAmount{
+  color:var(--gold);
+
+  font-size:30px;
+
+  font-weight:bold;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+  text-align:center;
+
+  color:#777;
+
+  padding:25px;
+
+  background:#000;
+
+  border-top:
+    1px solid
+    rgba(243,207,85,.18);
+
+  font-size:12px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+  header{
+    height:auto;
+
+    min-height:58px;
+
+    flex-direction:column;
+
+    gap:3px;
+
+    padding:7px 2%;
+  }
+
+  .logo{
+    font-size:18px;
+  }
+
+  nav{
+    justify-content:center;
+
+    flex-wrap:wrap;
+  }
+
+  nav a{
+    font-size:12px;
+
+    padding:5px 8px;
+  }
+
+  .creator{
+    padding-top:125px;
+  }
+
+  #home{
+    padding-top:25px;
+  }
+
+  .screen{
+    min-height:100vh;
+
+    padding:
+      20px
+      12px
+      35px;
+  }
+
+  .home-card{
+    grid-template-columns:1fr;
+
+    min-height:auto;
+  }
+
+  .art-wrap{
+    padding:
+      18px 25px;
+  }
+
+  .art-wrap img{
+    max-height:48vh;
+  }
+
+  .poem-wrap{
+    padding:
+      20px
+      20px
+      35px;
+  }
+
+  .poem{
+    font-size:27px;
+  }
+
+  .translation{
+    font-size:16px;
+  }
+
+  .patriot{
+    font-size:18px;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .full{
+    grid-column:auto;
+  }
+
+  .chat-layout{
+    grid-template-columns:1fr;
+  }
+
+  .users{
+    order:2;
+  }
+
+  .chat-panel{
+    order:1;
+  }
+
+  .chatbox{
+    height:350px;
+  }
+
+  .panel{
+    padding:20px;
+  }
+
+  .title{
+    font-size:28px;
+  }
+
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media(max-width:420px){
+
+  .logo{
+    font-size:16px;
+  }
+
+  nav a{
+    padding:5px 6px;
+    font-size:11px;
+  }
+
+  .creator-img{
+    width:75px;
+    height:75px;
+  }
+
+  .poem{
+    font-size:23px;
+  }
+
+  .translation{
+    font-size:14px;
+  }
+
+  .pay-btn{
+    width:100%;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     CREATOR
+========================= -->
+
+<div class="creator">
+
+  <img
+    src="assassin-profile.png"
+    class="creator-img"
+    alt="ASSASSIN CREED">
+
+  <br>
+
+  👑 ASSASSIN CREED
+
+  <br>
+
+  <span>Site Creator</span>
+
+</div>
+
+
+<!-- =========================
+     GATE
+========================= -->
+
+<div id="gate">
+
+  <div id="gateStars"></div>
+
+  <div class="gate-title">
+    در حال پیوستن...
+  </div>
+
+  <div class="gate-sub">
+    یک ستاره برای هر همراه
+  </div>
+
+</div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+  <div class="logo">
+    ASSASSIN PERSIAN
+  </div>
+
+  <nav>
+
+    <a
+      href="#home"
+      data-page="home"
+      class="active">
+      خانه
+    </a>
+
+    <a
+      href="#join"
+      data-page="join">
+      پیوستن
+    </a>
+
+    <a
+      href="#support"
+      data-page="support">
+      همراهان
+    </a>
+
+    <a
+      href="#chat"
+      data-page="chat">
+      چت
+    </a>
+
+  </nav>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main>
+
+
+<!-- HOME -->
+
+<section
+  id="home"
+  class="screen active">
+
+  <div class="home-card">
+
+    <div class="art-wrap">
+
+      <img
+        src="background.png"
+        alt="نقش طلایی سنتی">
+
+    </div>
+
+
+    <div class="poem-wrap">
+
+      <div class="ornament">
+        ✦
+      </div>
+
+
+      <div class="poem">عقاب شکاری نترسد ز بوم
+دومرد خراسان دوسد مرد روم
+اگر دست یزدان دهد رونقم
+به اسکندریه زنم بیرقم</div>
+
+
+      <div class="ornament">
+        ◇
+      </div>
+
+
+      <div class="translation">
+
+        The hunting eagle fears not the owl;<br>
+
+        Two men from Khorasan, two hundred men of Rome.<br>
+
+        If the hand of Yazdan grants me prosperity,<br>
+
+        I will raise my banner in Alexandria.
+
+      </div>
+
+
+      <div class="patriot">
+        ✦ برای آدم‌های میهن‌پرست و کمک مردمی ✦
+      </div>
+
+
+      <div class="home-actions">
+
+        <button
+          class="btn"
+          data-go="join">
+          پیوستن
+        </button>
+
+        <button
+          class="btn secondary"
+          data-go="support">
+          تعداد همراهان
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- JOIN -->
+
+<section
+  id="join"
+  class="screen">
+
+  <div class="panel">
+
+    <h2 class="title">
+      پیوستن
+    </h2>
+
+    <p class="sub">
+      برای حفظ حریم خصوصی، فقط اطلاعات پایه دریافت می‌شود.
+    </p>
+
+
+    <form id="joinForm">
+
+      <div class="form-grid">
+
+
+        <div>
+
+          <label for="name">
+            نام
+          </label>
+
+          <input
+            id="name"
+            maxlength="100"
+            required>
+
+        </div>
+
+
+        <div>
+
+          <label for="reason">
+            دلیل پیوستن
+          </label>
+
+          <input
+            id="reason"
+            maxlength="300"
+            required>
+
+        </div>
+
+
+        <div class="full">
+
+          <label for="message">
+            پیام شما
+          </label>
+
+          <textarea
+            id="message"
+            maxlength="1000"
+            placeholder="چند جمله برای جمع بنویسید..."></textarea>
+
+        </div>
+
+      </div>
+
+
+      <div class="notice">
+
+        <b>تعهدنامه</b>
+
+        <br>
+
+        من متعهد می‌شوم قوانین سایت را رعایت کنم،
+        به دیگران احترام بگذارم،
+        از اطلاعات خصوصی افراد سوءاستفاده نکنم
+        و در فعالیت‌های غیرقانونی یا خشونت‌آمیز شرکت نکنم.
+
+      </div>
+
+
+      <label class="check">
+
+        <input
+          type="checkbox"
+          id="agree"
+          required>
+
+        <span>
+          متن تعهدنامه و سیاست حریم خصوصی را خواندم و موافقم.
+        </span>
+
+      </label>
+
+
+      <label>
+        امضای آنلاین
+      </label>
+
+
+      <canvas
+        id="signature"
+        class="signature">
+      </canvas>
+
+
+      <div class="actions">
+
+        <button
+          type="button"
+          class="btn secondary"
+          id="clear">
+          پاک کردن امضا
+        </button>
+
+        <button
+          type="submit"
+          class="btn">
+          ثبت پیوستن
+        </button>
+
+      </div>
+
+
+      <p
+        id="joinMsg"
+        class="small">
+      </p>
+
+    </form>
+
+  </div>
+
+</section>
+
+
+<!-- SUPPORT -->
+
+<section
+  id="support"
+  class="screen">
+
+  <div class="payment-box">
+
+
+    <h2 class="payment-title">
+      حمایت مالی
+    </h2>
+
+
+    <div class="pay-buttons">
+
+      <button
+        class="pay-btn"
+        onclick="addSupport(10000)">
+        ۱۰,۰۰۰ تومان
+      </button>
+
+      <button
+        class="pay-btn"
+        onclick="addSupport(20000)">
+        ۲۰,۰۰۰ تومان
+      </button>
+
+      <button
+        class="pay-btn"
+        onclick="addSupport(50000)">
+        ۵۰,۰۰۰ تومان
+      </button>
+
+      <button
+        class="pay-btn"
+        onclick="addSupport(100000)">
+        ۱۰۰,۰۰۰ تومان
+      </button>
+
+    </div>
+
+
+    <div class="total-box">
+
+      <h3>
+        💰 مبلغ جمع‌آوری شده
+      </h3>
+
+      <p id="totalAmount">
+        ۰ تومان
+      </p>
+
+    </div>
+
+
+    <div class="panel">
+
+      <h2 class="title">
+        کمک مردمی و همراهان
+      </h2>
+
+      <p class="sub">
+        هر همراه یک ستاره به آسمان اضافه می‌کند.
+      </p>
+
+
+      <div
+        style="
+        text-align:center;
+        margin:20px 0;
+        ">
+
+        <div
+          style="
+          font-family:Georgia,serif;
+          font-size:88px;
+          color:var(--gold);
+          "
+          id="supportCount">
+          0
+        </div>
+
+        <div style="color:#bbb;">
+          تعداد همراهان
+        </div>
+
+      </div>
+
+
+      <div class="actions">
+
+        <button
+          class="btn"
+          data-go="join">
+          پیوستن و ساختن یک ستاره
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- GALAXY -->
+
+<section
+  id="galaxy"
+  class="screen">
+
+  <div class="galaxy-panel">
+
+    <div class="galaxy-title">
+      تعداد همراهان
+    </div>
+
+    <div id="galaxyStars"></div>
+
+    <div class="planet"></div>
+
+    <div class="counter">
+
+      <strong id="count">
+        0
+      </strong>
+
+      <span>
+        ستاره در کهکشان ما
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- CHAT -->
+
+<section
+  id="chat"
+  class="screen">
+
+  <div class="chat-layout">
+
+
+    <aside class="users">
+
+      <h3>
+        کاربران آنلاین
+        <span style="color:#1bc85a">
+          ●
+        </span>
+      </h3>
+
+
+      <div class="user">
+
+        <span class="dot"></span>
+
+        Assassin Persian
+
+      </div>
+
+
+      <div class="user">
+
+        <span class="dot"></span>
+
+        همراه
+
+      </div>
+
+
+      <div class="user">
+
+        <span class="dot"></span>
+
+        دوست
+
+      </div>
+
+
+      <div class="user">
+
+        <span class="dot"></span>
+
+        ایران
+
+      </div>
+
+    </aside>
+
+
+    <div class="chat-panel">
+
+
+      <div class="chat-head">
+        اتاق گفت‌وگو
+      </div>
+
+
+      <div
+        id="chatbox"
+        class="chatbox">
+      </div>
+
+
+      <div class="chat-row">
+
+        <input
+          id="chatInput"
+          maxlength="500"
+          placeholder="پیام خود را بنویسید...">
+
+        <button
+          id="sendChat"
+          class="btn">
+          ارسال
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<footer>
+
+  © 2026 ASSASSIN PERSIAN
+
+  —
+
+  این نسخه نمایشی است؛
+  برای استفاده واقعی چت و شمارنده باید به سرور امن متصل شوند.
+
+</footer>
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+const pages =
+  [...document.querySelectorAll(".screen")];
+
+const nav =
+  [...document.querySelectorAll("nav a[data-page]")];
+
+
+function showPage(id){
+
+  const target =
+    document.getElementById(id) ||
+    document.getElementById("home");
+
+
+  pages.forEach(page => {
+
+    page.classList.toggle(
+      "active",
+      page === target
+    );
+
+  });
+
+
+  nav.forEach(link => {
+
+    link.classList.toggle(
+      "active",
+      link.dataset.page === target.id
+    );
+
+  });
+
+
+  history.replaceState(
+    null,
+    "",
+    "#" + target.id
+  );
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+
+  if(target.id === "support"){
+    updateCount();
+  }
+
+
+  if(target.id === "galaxy"){
+    renderGalaxy();
+  }
+
+}
+
+
+/* Navigation */
+
+nav.forEach(link => {
+
+  link.addEventListener(
+    "click",
+    event => {
+
+      event.preventDefault();
+
+      showPage(
+        link.dataset.page
+      );
+
+    }
+  );
+
+});
+
+
+/* Buttons */
+
+document
+  .querySelectorAll("[data-go]")
+  .forEach(button => {
+
+    button.addEventListener(
+      "click",
+      () => {
+
+        showPage(
+          button.dataset.go
+        );
+
+      }
+    );
+
+  });
+
+
+/* =========================
+   COUNT
+========================= */
+
+function getCount(){
+
+  return Number(
+    localStorage.getItem(
+      "assassinPersianCount"
+    ) || 0
+  );
+
+}
+
+
+function updateCount(){
+
+  const value =
+    getCount()
+      .toLocaleString("fa-IR");
+
+
+  document.getElementById(
+    "supportCount"
+  ).textContent = value;
+
+
+  document.getElementById(
+    "count"
+  ).textContent = value;
+
+}
+
+
+/* =========================
+   SIGNATURE
+========================= */
+
+const canvas =
+  document.getElementById("signature");
+
+const ctx =
+  canvas.getContext("2d");
+
+let drawing = false;
+
+let hasSignature = false;
+
+
+function resizeCanvas(){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  const dpr =
+    window.devicePixelRatio || 1;
+
+
+  canvas.width =
+    rect.width * dpr;
+
+  canvas.height =
+    rect.height * dpr;
+
+
+  ctx.setTransform(
+    dpr,
+    0,
+    0,
+    dpr,
+    0,
+    0
+  );
+
+
+  ctx.strokeStyle = "#111";
+
+  ctx.lineWidth = 2.2;
+
+  ctx.lineCap = "round";
+
+}
+
+
+function getPoint(event){
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+
+  const point =
+    event.touches
+      ? event.touches[0]
+      : event;
+
+
+  return [
+
+    point.clientX - rect.left,
+
+    point.clientY - rect.top
+
+  ];
+
+}
+
+
+function startDrawing(event){
+
+  drawing = true;
+
+  hasSignature = true;
+
+  const point =
+    getPoint(event);
+
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    point[0],
+    point[1]
+  );
+
+
+  event.preventDefault();
+
+}
+
+
+function draw(event){
+
+  if(!drawing){
+    return;
+  }
+
+
+  const point =
+    getPoint(event);
+
+
+  ctx.lineTo(
+    point[0],
+    point[1]
+  );
+
+  ctx.stroke();
+
+
+  event.preventDefault();
+
+}
+
+
+function stopDrawing(){
+
+  drawing = false;
+
+}
+
+
+resizeCanvas();
+
+window.addEventListener(
+  "resize",
+  resizeCanvas
+);
+
+
+canvas.addEventListener(
+  "mousedown",
+  startDrawing
+);
+
+canvas.addEventListener(
+  "mousemove",
+  draw
+);
+
+window.addEventListener(
+  "mouseup",
+  stopDrawing
+);
+
+
+canvas.addEventListener(
+  "touchstart",
+  startDrawing,
+  {passive:false}
+);
+
+canvas.addEventListener(
+  "touchmove",
+  draw,
+  {passive:false}
+);
+
+canvas.addEventListener(
+  "touchend",
+  stopDrawing
+);
+
+
+/* Clear */
+
+document
+  .getElementById("clear")
+  .addEventListener(
+    "click",
+    () => {
+
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
+
+      hasSignature = false;
+
+    }
+  );
+
+
+/* =========================
+   JOIN
+========================= */
+
+document
+  .getElementById("joinForm")
+  .addEventListener(
+    "submit",
+    event => {
+
+      event.preventDefault();
+
+
+      if(!hasSignature){
+
+        alert(
+          "لطفاً ابتدا امضای آنلاین خود را ثبت کنید."
+        );
+
+        return;
+
+      }
+
+
+      const newCount =
+        getCount() + 1;
+
+
+      localStorage.setItem(
+        "assassinPersianCount",
+        String(newCount)
+      );
+
+
+      document.getElementById(
+        "joinMsg"
+      ).textContent =
+        "پیوستن ثبت شد.";
+
+
+      showGate();
+
+    }
+  );
+
+
+/* =========================
+   GATE
+========================= */
+
+function showGate(){
+
+  const gate =
+    document.getElementById("gate");
+
+  const box =
+    document.getElementById("gateStars");
+
+
+  box.innerHTML = "";
+
+
+  gate.classList.add("show");
+
+
+  const star =
+    document.createElement("i");
+
+
+  star.className = "star";
+
+
+  star.style.left =
+    (12 + Math.random() * 76) + "%";
+
+
+  star.style.top =
+    (15 + Math.random() * 70) + "%";
+
+
+  box.appendChild(star);
+
+
+  setTimeout(
+    () => {
+
+      gate.classList.remove("show");
+
+      renderGalaxy();
+
+      showPage("galaxy");
+
+    },
+    1900
+  );
+
+}
+
+
+/* =========================
+   GALAXY
+========================= */
+
+function renderGalaxy(){
+
+  updateCount();
+
+
+  const box =
+    document.getElementById(
+      "galaxyStars"
+    );
+
+
+  box.innerHTML = "";
+
+
+  const total =
+    Math.min(
+      360,
+      Math.max(
+        90,
+        getCount() + 90
+      )
+    );
+
+
+  for(
+    let i = 0;
+    i < total;
+    i++
+  ){
+
+    const star =
+      document.createElement("i");
+
+
+    star.className = "gstar";
+
+
+    const randomX =
+      4 + Math.random() * 92;
+
+
+    const randomY =
+      4 + Math.random() * 92;
+
+
+    star.style.left =
+      randomX + "%";
+
+
+    star.style.top =
+      randomY + "%";
+
+
+    const size =
+      Math.random() * 2.4 + .7;
+
+
+    star.style.width =
+      size + "px";
+
+
+    star.style.height =
+      size + "px";
+
+
+    star.style.animationDelay =
+      (-Math.random() * 2.3) + "s";
+
+
+    box.appendChild(star);
+
+  }
+
+}
+
+
+/* =========================
+   LOCAL CHAT
+========================= */
+
+const chatbox =
+  document.getElementById(
+    "chatbox"
+  );
+
+
+function loadChat(){
+
+  let data = [];
+
+
+  try{
+
+    data =
+      JSON.parse(
+        localStorage.getItem(
+          "assassinPersianChat"
+        ) || "[]"
+      );
+
+  }catch(error){
+
+    data = [];
+
+  }
+
+
+  if(!data.length){
+
+    data = [
+
+      {
+        me:false,
+        text:"سلام دوستان، خوشحالم که اینجا هستیم."
+      },
+
+      {
+        me:false,
+        text:"همدلی و کمک به همنوعان مهم است."
+      }
+
+    ];
+
+  }
+
+
+  chatbox.innerHTML = "";
+
+
+  data.forEach(
+    message => {
+
+      addMessage(
+        message.text,
+        message.me,
+        false
+      );
+
+    }
+  );
+
+}
+
+
+function addMessage(
+  text,
+  me,
+  save = true
+){
+
+  const div =
+    document.createElement("div");
+
+
+  div.className =
+    "msg" + (me ? " me" : "");
+
+
+  div.textContent = text;
+
+
+  chatbox.appendChild(div);
+
+
+  chatbox.scrollTop =
+    chatbox.scrollHeight;
+
+
+  if(save){
+
+    let data = [];
+
+
+    try{
+
+      data =
+        JSON.parse(
+          localStorage.getItem(
+            "assassinPersianChat"
+          ) || "[]"
+        );
+
+    }catch(error){
+
+      data = [];
+
+    }
+
+
+    data.push({
+      text:text,
+      me:me
+    });
+
+
+    localStorage.setItem(
+      "assassinPersianChat",
+      JSON.stringify(
+        data.slice(-100)
+      )
+    );
+
+  }
+
+}
+
+
+function sendChat(){
+
+  const input =
+    document.getElementById(
+      "chatInput"
+    );
+
+
+  const text =
+    input.value.trim();
+
+
+  if(!text){
+    return;
+  }
+
+
+  addMessage(
+    text,
+    true,
+    true
+  );
+
+
+  input.value = "";
+
+}
+
+
+document
+  .getElementById("sendChat")
+  .addEventListener(
+    "click",
+    sendChat
+  );
+
+
+document
+  .getElementById("chatInput")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if(event.key === "Enter"){
+
+        event.preventDefault();
+
+        sendChat();
+
+      }
+
+    }
+  );
+
+
+/* =========================
+   SUPPORT MONEY
+========================= */
+
+let total =
+  Number(
+    localStorage.getItem(
+      "supportMoney"
+    ) || 0
+  );
+
+
+function updateTotal(){
+
+  document.getElementById(
+    "totalAmount"
+  ).textContent =
+    total.toLocaleString("fa-IR")
+    + " تومان";
+
+}
+
+
+function addSupport(amount){
+
+  total += Number(amount);
+
+
+  localStorage.setItem(
+    "supportMoney",
+    String(total)
+  );
+
+
+  updateTotal();
+
+}
+
+
+/* =========================
+   LOAD
+========================= */
+
+window.addEventListener(
+  "load",
+  () => {
+
+    const id =
+      location.hash.slice(1);
+
+
+    if(
+      id &&
+      document.getElementById(id)
+    ){
+
+      showPage(id);
+
+    }else{
+
+      showPage("home");
+
+    }
+
+
+    updateCount();
+
+    updateTotal();
+
+    loadChat();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
