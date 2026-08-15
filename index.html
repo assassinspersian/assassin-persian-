@@ -1554,9 +1554,1022 @@ footer{
 
   —
 
-  نسخه متصل به Firebase
+  نسخه Firebase
 
 </footer>
 
 
 <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc,
+  addDoc,
+  collection,
+  query,
+  orderBy,
+  limit,
+  onSnapshot,
+  serverTimestamp,
+  increment,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+import {
+  getAnalytics
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-analytics.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAYeilmvrX0Kw8U6HS5GdwMSs1kKcUFrLU",
+  authDomain: "assassin-persian.firebaseapp.com",
+  projectId: "assassin-persian",
+  storageBucket: "assassin-persian.firebasestorage.app",
+  messagingSenderId: "478104867850",
+  appId: "1:478104867850:web:ff8812eda94d3b605dbbf3",
+  measurementId: "G-SCBQVCJ77K"
+};
+
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
+let confirmationResult = null;
+let recaptchaVerifier = null;
+let currentUser = null;
+let unsubscribeChat = null;
+let signatureDrawing = false;
+
+
+const $ = id => document.getElementById(id);
+
+
+const pages = document.querySelectorAll(".screen");
+const navButtons = document.querySelectorAll("nav button");
+
+
+function showPage(pageId) {
+
+  pages.forEach(page => {
+    page.classList.toggle("active", page.id === pageId);
+  });
+
+  navButtons.forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.page === pageId
+    );
+  });
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+  if (pageId === "chat") {
+    loadChat();
+  }
+}
+
+
+navButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+
+});
+
+
+document.querySelectorAll("[data-go]").forEach(button => {
+
+  button.addEventListener("click", () => {
+    showPage(button.dataset.go);
+  });
+
+});
+
+
+function setStatus(element, message, success = false) {
+
+  if (!element) return;
+
+  element.textContent = message;
+
+  element.style.color =
+    success ? "#72e09a" : "var(--gold)";
+}
+
+
+function normalizePhone(phone) {
+
+  phone = phone.trim().replace(/\s+/g, "");
+
+  if (phone.startsWith("09")) {
+    phone = "+98" + phone.substring(1);
+  }
+
+  return phone;
+}
+
+
+function createRecaptcha() {
+
+  if (recaptchaVerifier) return;
+
+  recaptchaVerifier = new RecaptchaVerifier(
+    auth,
+    "recaptcha-container",
+    {
+      size: "normal"
+    }
+  );
+
+}
+
+
+async function sendSMS() {
+
+  const phoneInput = $("phoneNumber");
+  const status = $("authStatus");
+
+  let phone = normalizePhone(phoneInput.value);
+
+  if (!phone) {
+    setStatus(status, "لطفاً شماره موبایل را وارد کنید.");
+    return;
+  }
+
+  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
+    setStatus(status, "فرمت شماره موبایل صحیح نیست.");
+    return;
+  }
+
+  try {
+
+    createRecaptcha();
+
+    setStatus(status, "در حال ارسال کد...");
+
+    confirmationResult =
+      await signInWithPhoneNumber(
+        auth,
+        phone,
+        recaptchaVerifier
+      );
+
+    $("codeArea").classList.remove("auth-hidden");
+
+    setStatus(
+      status,
+      "کد تأیید برای شما ارسال شد.",
+      true
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    setStatus(
+      status,
+      "ارسال کد انجام نشد. تنظیمات Phone Authentication و دامنه سایت را در Firebase بررسی کنید."
+    );
+
+    if (recaptchaVerifier) {
+      try {
+        recaptchaVerifier.clear();
+      } catch (e) {}
+
+      recaptchaVerifier = null;
+    }
+
+  }
+
+}
+
+
+$("sendCodeBtn").addEventListener(
+  "click",
+  sendSMS
+);
+
+
+async function verifySMS() {
+
+  const code = $("smsCode").value.trim();
+  const status = $("authStatus");
+
+  if (!confirmationResult) {
+    setStatus(status, "ابتدا کد SMS را درخواست کنید.");
+    return;
+  }
+
+  if (!/^\d{6}$/.test(code)) {
+    setStatus(status, "کد ۶ رقمی را وارد کنید.");
+    return;
+  }
+
+  try {
+
+    setStatus(status, "در حال بررسی کد...");
+
+    await confirmationResult.confirm(code);
+
+    confirmationResult = null;
+
+    setStatus(
+      status,
+      "ورود با موفقیت انجام شد.",
+      true
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    setStatus(
+      status,
+      "کد واردشده صحیح نیست یا منقضی شده است."
+    );
+
+  }
+
+}
+
+
+$("verifyCodeBtn").addEventListener(
+  "click",
+  verifySMS
+);
+
+
+onAuthStateChanged(auth, async user => {
+
+  currentUser = user;
+
+  if (user) {
+
+    await loadUserProfile(user);
+
+    $("memberForm").classList.remove("auth-hidden");
+
+    $("loginFromProfile").style.display = "none";
+
+    $("logoutBtn").style.display = "inline-block";
+
+    $("chatInput").placeholder =
+      "پیام خود را بنویسید...";
+
+    setStatus(
+      $("authStatus"),
+      "شما وارد حساب خود هستید.",
+      true
+    );
+
+  } else {
+
+    $("memberForm").classList.add("auth-hidden");
+
+    $("loginFromProfile").style.display =
+      "inline-block";
+
+    $("logoutBtn").style.display = "none";
+
+    $("profileName").textContent = "مهمان";
+
+    $("profilePhone").textContent =
+      "وارد نشده‌اید";
+
+    $("chatInput").placeholder =
+      "برای ارسال پیام ابتدا وارد شوید...";
+
+  }
+
+});
+
+
+async function loadUserProfile(user) {
+
+  try {
+
+    const userRef = doc(
+      db,
+      "users",
+      user.uid
+    );
+
+    const snapshot = await getDoc(userRef);
+
+    if (snapshot.exists()) {
+
+      const data = snapshot.data();
+
+      $("profileName").textContent =
+        data.name || "عضو";
+
+      $("profilePhone").textContent =
+        data.phone || user.phoneNumber || "";
+
+      if (data.avatar) {
+        $("profileAvatar").src = data.avatar;
+      }
+
+      if (data.name) {
+        $("name").value = data.name;
+      }
+
+      if (data.reason) {
+        $("reason").value = data.reason;
+      }
+
+      if (data.message) {
+        $("message").value = data.message;
+      }
+
+    } else {
+
+      $("profileName").textContent = "عضو جدید";
+
+      $("profilePhone").textContent =
+        user.phoneNumber || "";
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+$("joinForm").addEventListener(
+  "submit",
+  async event => {
+
+    event.preventDefault();
+
+    if (!currentUser) {
+
+      setStatus(
+        $("joinMsg"),
+        "ابتدا با شماره موبایل وارد شوید."
+      );
+
+      return;
+    }
+
+    if (!$("agree").checked) {
+
+      setStatus(
+        $("joinMsg"),
+        "لطفاً تعهدنامه را تأیید کنید."
+      );
+
+      return;
+    }
+
+    const signatureCanvas = $("signature");
+
+    const signatureData =
+      signatureCanvas.toDataURL("image/png");
+
+    const name =
+      $("name").value.trim();
+
+    const reason =
+      $("reason").value.trim();
+
+    const message =
+      $("message").value.trim();
+
+    if (!name || !reason) {
+
+      setStatus(
+        $("joinMsg"),
+        "نام و دلیل پیوستن را وارد کنید."
+      );
+
+      return;
+    }
+
+    try {
+
+      setStatus(
+        $("joinMsg"),
+        "در حال ثبت اطلاعات..."
+      );
+
+      const userRef = doc(
+        db,
+        "users",
+        currentUser.uid
+      );
+
+      await setDoc(
+        userRef,
+        {
+          uid: currentUser.uid,
+          phone: currentUser.phoneNumber || "",
+          name,
+          reason,
+          message,
+          signature: signatureData,
+          joined: true,
+          joinedAt: serverTimestamp(),
+          updatedAt: serverTimestamp()
+        },
+        {
+          merge: true
+        }
+      );
+
+      await setDoc(
+        doc(
+          db,
+          "members",
+          currentUser.uid
+        ),
+        {
+          uid: currentUser.uid,
+          name,
+          phone: currentUser.phoneNumber || "",
+          joined: true,
+          createdAt: serverTimestamp()
+        },
+        {
+          merge: true
+        }
+      );
+
+      $("profileName").textContent = name;
+
+      $("profilePhone").textContent =
+        currentUser.phoneNumber || "";
+
+      setStatus(
+        $("joinMsg"),
+        "عضویت شما با موفقیت ثبت شد.",
+        true
+      );
+
+      updateSupportCount();
+
+    } catch (error) {
+
+      console.error(error);
+
+      setStatus(
+        $("joinMsg"),
+        "ثبت اطلاعات انجام نشد. قوانین Firestore را بررسی کنید."
+      );
+
+    }
+
+  }
+);
+
+
+$("logoutBtn").addEventListener(
+  "click",
+  async () => {
+
+    try {
+
+      await signOut(auth);
+
+      setStatus(
+        $("profileStatus"),
+        "با موفقیت خارج شدید.",
+        true
+      );
+
+    } catch (error) {
+
+      console.error(error);
+
+      setStatus(
+        $("profileStatus"),
+        "خروج انجام نشد."
+      );
+
+    }
+
+  }
+);
+
+
+$("loginFromProfile").addEventListener(
+  "click",
+  () => {
+    showPage("join");
+    $("phoneNumber").focus();
+  }
+);
+
+
+const canvas = $("signature");
+const ctx = canvas.getContext("2d");
+
+
+function resizeSignatureCanvas() {
+
+  const rect = canvas.getBoundingClientRect();
+
+  const ratio =
+    window.devicePixelRatio || 1;
+
+  const oldData =
+    canvas.width > 0 && canvas.height > 0
+      ? canvas.toDataURL()
+      : null;
+
+  canvas.width =
+    rect.width * ratio;
+
+  canvas.height =
+    rect.height * ratio;
+
+  ctx.scale(ratio, ratio);
+
+  ctx.lineWidth = 2;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = "#111";
+
+  if (oldData) {
+
+    const image = new Image();
+
+    image.onload = () => {
+      ctx.drawImage(
+        image,
+        0,
+        0,
+        rect.width,
+        rect.height
+      );
+    };
+
+    image.src = oldData;
+  }
+
+}
+
+
+resizeSignatureCanvas();
+
+window.addEventListener(
+  "resize",
+  resizeSignatureCanvas
+);
+
+
+function getCanvasPosition(event) {
+
+  const rect =
+    canvas.getBoundingClientRect();
+
+  let clientX;
+  let clientY;
+
+  if (event.touches && event.touches.length) {
+
+    clientX =
+      event.touches[0].clientX;
+
+    clientY =
+      event.touches[0].clientY;
+
+  } else {
+
+    clientX = event.clientX;
+    clientY = event.clientY;
+
+  }
+
+  return {
+    x: clientX - rect.left,
+    y: clientY - rect.top
+  };
+
+}
+
+
+function startSignature(event) {
+
+  event.preventDefault();
+
+  signatureDrawing = true;
+
+  const pos =
+    getCanvasPosition(event);
+
+  ctx.beginPath();
+
+  ctx.moveTo(
+    pos.x,
+    pos.y
+  );
+
+}
+
+
+function drawSignature(event) {
+
+  if (!signatureDrawing) return;
+
+  event.preventDefault();
+
+  const pos =
+    getCanvasPosition(event);
+
+  ctx.lineTo(
+    pos.x,
+    pos.y
+  );
+
+  ctx.stroke();
+
+}
+
+
+function stopSignature() {
+
+  signatureDrawing = false;
+
+  ctx.closePath();
+
+}
+
+
+canvas.addEventListener(
+  "mousedown",
+  startSignature
+);
+
+canvas.addEventListener(
+  "mousemove",
+  drawSignature
+);
+
+window.addEventListener(
+  "mouseup",
+  stopSignature
+);
+
+canvas.addEventListener(
+  "touchstart",
+  startSignature,
+  { passive:false }
+);
+
+canvas.addEventListener(
+  "touchmove",
+  drawSignature,
+  { passive:false }
+);
+
+window.addEventListener(
+  "touchend",
+  stopSignature
+);
+
+
+$("clear").addEventListener(
+  "click",
+  () => {
+
+    ctx.clearRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+  }
+);
+
+
+async function updateSupportCount() {
+
+  try {
+
+    const membersSnapshot =
+      await getDocs(
+        collection(db, "members")
+      );
+
+    $("supportCount").textContent =
+      membersSnapshot.size.toLocaleString("fa-IR");
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+async function loadTotalAmount() {
+
+  try {
+
+    const supportSnapshot =
+      await getDocs(
+        collection(db, "support")
+      );
+
+    let total = 0;
+
+    supportSnapshot.forEach(item => {
+
+      const data = item.data();
+
+      total += Number(data.amount || 0);
+
+    });
+
+    $("totalAmount").textContent =
+      total.toLocaleString("fa-IR") +
+      " تومان";
+
+  } catch (error) {
+
+    console.error(error);
+
+  }
+
+}
+
+
+document.querySelectorAll(
+  "[data-support]"
+).forEach(button => {
+
+  button.addEventListener(
+    "click",
+    async () => {
+
+      if (!currentUser) {
+
+        showPage("join");
+
+        setStatus(
+          $("authStatus"),
+          "برای ثبت حمایت ابتدا وارد شوید."
+        );
+
+        return;
+      }
+
+      const amount =
+        Number(button.dataset.support);
+
+      if (!amount) return;
+
+      try {
+
+        await addDoc(
+          collection(db, "support"),
+          {
+            uid: currentUser.uid,
+            amount,
+            createdAt: serverTimestamp()
+          }
+        );
+
+        await loadTotalAmount();
+
+        setStatus(
+          $("chatStatus"),
+          ""
+        );
+
+        alert(
+          "مبلغ حمایت شما ثبت شد."
+        );
+
+      } catch (error) {
+
+        console.error(error);
+
+        alert(
+          "ثبت حمایت انجام نشد."
+        );
+
+      }
+
+    }
+  );
+
+});
+
+
+async function sendChatMessage() {
+
+  if (!currentUser) {
+
+    setStatus(
+      $("chatStatus"),
+      "برای ارسال پیام ابتدا وارد شوید."
+    );
+
+    return;
+  }
+
+  const input = $("chatInput");
+
+  const text =
+    input.value.trim();
+
+  if (!text) return;
+
+  if (text.length > 500) return;
+
+  try {
+
+    const userSnapshot =
+      await getDoc(
+        doc(
+          db,
+          "users",
+          currentUser.uid
+        )
+      );
+
+    const userData =
+      userSnapshot.exists()
+        ? userSnapshot.data()
+        : {};
+
+    await addDoc(
+      collection(db, "messages"),
+      {
+        uid: currentUser.uid,
+        name:
+          userData.name ||
+          "عضو",
+        text,
+        createdAt:
+          serverTimestamp()
+      }
+    );
+
+    input.value = "";
+
+    setStatus(
+      $("chatStatus"),
+      "پیام ارسال شد.",
+      true
+    );
+
+  } catch (error) {
+
+    console.error(error);
+
+    setStatus(
+      $("chatStatus"),
+      "ارسال پیام انجام نشد."
+    );
+
+  }
+
+}
+
+
+$("sendChat").addEventListener(
+  "click",
+  sendChatMessage
+);
+
+
+$("chatInput").addEventListener(
+  "keydown",
+  event => {
+
+    if (
+      event.key === "Enter" &&
+      !event.shiftKey
+    ) {
+
+      event.preventDefault();
+
+      sendChatMessage();
+
+    }
+
+  }
+);
+
+
+function escapeHTML(value) {
+
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+
+}
+
+
+function renderMessage(data) {
+
+  const box = $("chatbox");
+
+  const message =
+    document.createElement("div");
+
+  const isMe =
+    currentUser &&
+    data.uid === currentUser.uid;
+
+  message.className =
+    isMe ? "msg me" : "msg";
+
+  const name =
+    escapeHTML(
+      data.name || "عضو"
+    );
+
+  const text =
+    escapeHTML(
+      data.text || ""
+    );
+
+  message.innerHTML =
+    `<strong>${name}</strong><br>${text}`;
+
+  box.appendChild(message);
+
+}
+
+
+function loadChat() {
+
+  if (unsubscribeChat) {
+    unsubscribeChat();
+    unsubscribeChat = null;
+  }
+
+  const chatQuery =
+    query(
+      collection(db, "messages"),
+      orderBy("createdAt", "asc"),
+      limit(100)
+    );
+
+  unsubscribeChat =
+    onSnapshot(
+      chatQuery,
+      snapshot => {
+
+        const box = $("chatbox");
+
+        box.innerHTML = "";
+
+        snapshot.forEach(docSnap => {
+
+          renderMessage(
+            docSnap.data()
+          );
+
+        });
+
+        box.scrollTop =
+          box.scrollHeight;
+
+      },
+      error => {
+
+        console.error(error);
+
+        setStatus(
+          $("chatStatus"),
+          "اتصال به چت برقرار نشد."
+        );
+
+      }
+    );
+
+}
+
+
+updateSupportCount();
+loadTotalAmount();
