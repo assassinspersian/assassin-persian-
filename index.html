@@ -72,8 +72,6 @@ body::after{
     );
 }
 
-/* HEADER */
-
 header{
   height:58px;
   position:fixed;
@@ -127,8 +125,6 @@ nav button.active{
   background:var(--gold);
 }
 
-/* CREATOR */
-
 .creator{
   text-align:center;
   padding-top:75px;
@@ -163,8 +159,6 @@ nav button.active{
   color:#fff;
 }
 
-/* MAIN */
-
 main{
   padding-top:0;
 }
@@ -196,8 +190,6 @@ main{
     transform:none;
   }
 }
-
-/* HOME */
 
 #home{
   padding-top:110px;
@@ -348,8 +340,6 @@ main{
   flex-wrap:wrap;
 }
 
-/* BUTTON */
-
 .btn{
   border:1px solid var(--gold);
 
@@ -389,8 +379,6 @@ main{
   color:var(--gold);
 }
 
-/* PANEL */
-
 .panel{
   width:min(900px,100%);
 
@@ -423,8 +411,6 @@ main{
   margin-bottom:25px;
 }
 
-/* LOGIN */
-
 .login-box{
   max-width:520px;
   margin:0 auto;
@@ -439,20 +425,9 @@ main{
   color:var(--gold);
 }
 
-.phone-row{
-  display:flex;
-  gap:8px;
-}
-
-.phone-row input{
-  flex:1;
-}
-
 .auth-hidden{
-  display:none;
+  display:none !important;
 }
-
-/* PROFILE */
 
 .profile-box{
   text-align:center;
@@ -484,8 +459,6 @@ main{
   direction:ltr;
   margin-bottom:20px;
 }
-
-/* FORM */
 
 .form-grid{
   display:grid;
@@ -596,8 +569,6 @@ textarea{
   color:var(--gold);
 }
 
-/* SUPPORT */
-
 .payment-box{
   width:min(900px,100%);
   text-align:center;
@@ -686,8 +657,6 @@ textarea{
   font-size:88px;
   color:var(--gold);
 }
-
-/* CHAT */
 
 .chat-layout{
   width:min(1050px,100%);
@@ -809,8 +778,6 @@ textarea{
   flex:1;
 }
 
-/* GATE */
-
 #gate{
   position:fixed;
 
@@ -873,8 +840,6 @@ textarea{
   }
 }
 
-/* FOOTER */
-
 footer{
   text-align:center;
 
@@ -888,8 +853,6 @@ footer{
 
   font-size:12px;
 }
-
-/* MOBILE */
 
 @media(max-width:800px){
 
@@ -991,10 +954,6 @@ footer{
 
   .title{
     font-size:28px;
-  }
-
-  .phone-row{
-    flex-direction:column;
   }
 }
 
@@ -1114,7 +1073,7 @@ footer{
       <div class="ornament">✦</div>
 
       <div class="poem">عقاب شکاری نترسد ز بوم
-دومرد خراسان دوسد مرد روم
+دو مرد خراسان، دو صد مرد روم
 اگر دست یزدان دهد رونقم
 به اسکندریه زنم بیرقم</div>
 
@@ -1551,16 +1510,15 @@ footer{
 <footer>
 
   © 2026 ASSASSIN PERSIAN
-
   —
-
   نسخه Firebase
 
 </footer>
 
-
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
 import {
   getAuth,
   RecaptchaVerifier,
@@ -1581,7 +1539,6 @@ import {
   limit,
   onSnapshot,
   serverTimestamp,
-  increment,
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
@@ -1591,20 +1548,41 @@ import {
 
 
 const firebaseConfig = {
+
   apiKey: "AIzaSyAYeilmvrX0Kw8U6HS5GdwMSs1kKcUFrLU",
-  authDomain: "assassin-persian.firebaseapp.com",
-  projectId: "assassin-persian",
-  storageBucket: "assassin-persian.firebasestorage.app",
-  messagingSenderId: "478104867850",
-  appId: "1:478104867850:web:ff8812eda94d3b605dbbf3",
-  measurementId: "G-SCBQVCJ77K"
+
+  authDomain:
+    "assassin-persian.firebaseapp.com",
+
+  projectId:
+    "assassin-persian",
+
+  storageBucket:
+    "assassin-persian.firebasestorage.app",
+
+  messagingSenderId:
+    "478104867850",
+
+  appId:
+    "1:478104867850:web:ff8812eda94d3b605dbbf3",
+
+  measurementId:
+    "G-SCBQVCJ77K"
+
 };
 
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app =
+  initializeApp(firebaseConfig);
+
+const analytics =
+  getAnalytics(app);
+
+const auth =
+  getAuth(app);
+
+const db =
+  getFirestore(app);
 
 
 let confirmationResult = null;
@@ -1614,115 +1592,182 @@ let unsubscribeChat = null;
 let signatureDrawing = false;
 
 
-const $ = id => document.getElementById(id);
+const $ = id =>
+  document.getElementById(id);
 
 
-const pages = document.querySelectorAll(".screen");
-const navButtons = document.querySelectorAll("nav button");
+const pages =
+  document.querySelectorAll(".screen");
+
+const navButtons =
+  document.querySelectorAll("nav button");
 
 
-function showPage(pageId) {
+function showPage(pageId){
 
   pages.forEach(page => {
-    page.classList.toggle("active", page.id === pageId);
+
+    page.classList.toggle(
+      "active",
+      page.id === pageId
+    );
+
   });
 
+
   navButtons.forEach(button => {
+
     button.classList.toggle(
       "active",
       button.dataset.page === pageId
     );
+
   });
+
 
   window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+    top:0,
+    behavior:"smooth"
   });
 
-  if (pageId === "chat") {
+
+  if(pageId === "chat"){
     loadChat();
   }
+
 }
 
 
 navButtons.forEach(button => {
 
-  button.addEventListener("click", () => {
-    showPage(button.dataset.page);
-  });
-
-});
-
-
-document.querySelectorAll("[data-go]").forEach(button => {
-
-  button.addEventListener("click", () => {
-    showPage(button.dataset.go);
-  });
-
-});
-
-
-function setStatus(element, message, success = false) {
-
-  if (!element) return;
-
-  element.textContent = message;
-
-  element.style.color =
-    success ? "#72e09a" : "var(--gold)";
-}
-
-
-function normalizePhone(phone) {
-
-  phone = phone.trim().replace(/\s+/g, "");
-
-  if (phone.startsWith("09")) {
-    phone = "+98" + phone.substring(1);
-  }
-
-  return phone;
-}
-
-
-function createRecaptcha() {
-
-  if (recaptchaVerifier) return;
-
-  recaptchaVerifier = new RecaptchaVerifier(
-    auth,
-    "recaptcha-container",
-    {
-      size: "normal"
+  button.addEventListener(
+    "click",
+    () => {
+      showPage(button.dataset.page);
     }
   );
 
+});
+
+
+document.querySelectorAll(
+  "[data-go]"
+).forEach(button => {
+
+  button.addEventListener(
+    "click",
+    () => {
+      showPage(button.dataset.go);
+    }
+  );
+
+});
+
+
+function setStatus(
+  element,
+  message,
+  success = false
+){
+
+  if(!element) return;
+
+  element.textContent =
+    message;
+
+  element.style.color =
+    success
+      ? "#72e09a"
+      : "var(--gold)";
+
 }
 
 
-async function sendSMS() {
+function normalizePhone(phone){
 
-  const phoneInput = $("phoneNumber");
-  const status = $("authStatus");
+  phone =
+    phone
+      .trim()
+      .replace(/\s+/g,"");
 
-  let phone = normalizePhone(phoneInput.value);
+  if(phone.startsWith("09")){
 
-  if (!phone) {
-    setStatus(status, "لطفاً شماره موبایل را وارد کنید.");
+    phone =
+      "+98" +
+      phone.substring(1);
+
+  }
+
+  return phone;
+
+}
+
+
+function createRecaptcha(){
+
+  if(recaptchaVerifier){
     return;
   }
 
-  if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-    setStatus(status, "فرمت شماره موبایل صحیح نیست.");
+  recaptchaVerifier =
+    new RecaptchaVerifier(
+      auth,
+      "recaptcha-container",
+      {
+        size:"normal"
+      }
+    );
+
+}
+
+
+async function sendSMS(){
+
+  const phoneInput =
+    $("phoneNumber");
+
+  const status =
+    $("authStatus");
+
+  const phone =
+    normalizePhone(
+      phoneInput.value
+    );
+
+
+  if(!phone){
+
+    setStatus(
+      status,
+      "لطفاً شماره موبایل را وارد کنید."
+    );
+
     return;
+
   }
 
-  try {
+
+  if(!/^\+[1-9]\d{7,14}$/.test(phone)){
+
+    setStatus(
+      status,
+      "فرمت شماره موبایل صحیح نیست."
+    );
+
+    return;
+
+  }
+
+
+  try{
 
     createRecaptcha();
 
-    setStatus(status, "در حال ارسال کد...");
+    setStatus(
+      status,
+      "در حال ارسال کد..."
+    );
+
 
     confirmationResult =
       await signInWithPhoneNumber(
@@ -1731,7 +1776,11 @@ async function sendSMS() {
         recaptchaVerifier
       );
 
-    $("codeArea").classList.remove("auth-hidden");
+
+    $("codeArea")
+      .classList
+      .remove("auth-hidden");
+
 
     setStatus(
       status,
@@ -1739,7 +1788,8 @@ async function sendSMS() {
       true
     );
 
-  } catch (error) {
+  }
+  catch(error){
 
     console.error(error);
 
@@ -1748,12 +1798,17 @@ async function sendSMS() {
       "ارسال کد انجام نشد. تنظیمات Phone Authentication و دامنه سایت را در Firebase بررسی کنید."
     );
 
-    if (recaptchaVerifier) {
-      try {
-        recaptchaVerifier.clear();
-      } catch (e) {}
 
-      recaptchaVerifier = null;
+    if(recaptchaVerifier){
+
+      try{
+        recaptchaVerifier.clear();
+      }
+      catch(e){}
+
+      recaptchaVerifier =
+        null;
+
     }
 
   }
@@ -1761,34 +1816,64 @@ async function sendSMS() {
 }
 
 
-$("sendCodeBtn").addEventListener(
-  "click",
-  sendSMS
-);
+$("sendCodeBtn")
+  .addEventListener(
+    "click",
+    sendSMS
+  );
 
 
-async function verifySMS() {
+async function verifySMS(){
 
-  const code = $("smsCode").value.trim();
-  const status = $("authStatus");
+  const code =
+    $("smsCode")
+      .value
+      .trim();
 
-  if (!confirmationResult) {
-    setStatus(status, "ابتدا کد SMS را درخواست کنید.");
+  const status =
+    $("authStatus");
+
+
+  if(!confirmationResult){
+
+    setStatus(
+      status,
+      "ابتدا کد SMS را درخواست کنید."
+    );
+
     return;
+
   }
 
-  if (!/^\d{6}$/.test(code)) {
-    setStatus(status, "کد ۶ رقمی را وارد کنید.");
+
+  if(!/^\d{6}$/.test(code)){
+
+    setStatus(
+      status,
+      "کد ۶ رقمی را وارد کنید."
+    );
+
     return;
+
   }
 
-  try {
 
-    setStatus(status, "در حال بررسی کد...");
+  try{
 
-    await confirmationResult.confirm(code);
+    setStatus(
+      status,
+      "در حال بررسی کد..."
+    );
 
-    confirmationResult = null;
+
+    await confirmationResult.confirm(
+      code
+    );
+
+
+    confirmationResult =
+      null;
+
 
     setStatus(
       status,
@@ -1796,7 +1881,8 @@ async function verifySMS() {
       true
     );
 
-  } catch (error) {
+  }
+  catch(error){
 
     console.error(error);
 
@@ -1810,105 +1896,165 @@ async function verifySMS() {
 }
 
 
-$("verifyCodeBtn").addEventListener(
-  "click",
-  verifySMS
+$("verifyCodeBtn")
+  .addEventListener(
+    "click",
+    verifySMS
+  );
+
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    currentUser =
+      user;
+
+
+    if(user){
+
+      await loadUserProfile(user);
+
+
+      $("memberForm")
+        .classList
+        .remove("auth-hidden");
+
+
+      $("loginFromProfile")
+        .style
+        .display = "none";
+
+
+      $("logoutBtn")
+        .style
+        .display = "inline-block";
+
+
+      $("chatInput")
+        .placeholder =
+        "پیام خود را بنویسید...";
+
+
+      setStatus(
+        $("authStatus"),
+        "شما وارد حساب خود هستید.",
+        true
+      );
+
+    }
+    else{
+
+      $("memberForm")
+        .classList
+        .add("auth-hidden");
+
+
+      $("loginFromProfile")
+        .style
+        .display = "inline-block";
+
+
+      $("logoutBtn")
+        .style
+        .display = "none";
+
+
+      $("profileName")
+        .textContent = "مهمان";
+
+
+      $("profilePhone")
+        .textContent =
+        "وارد نشده‌اید";
+
+
+      $("chatInput")
+        .placeholder =
+        "برای ارسال پیام ابتدا وارد شوید...";
+
+    }
+
+  }
 );
 
 
-onAuthStateChanged(auth, async user => {
+async function loadUserProfile(user){
 
-  currentUser = user;
+  try{
 
-  if (user) {
-
-    await loadUserProfile(user);
-
-    $("memberForm").classList.remove("auth-hidden");
-
-    $("loginFromProfile").style.display = "none";
-
-    $("logoutBtn").style.display = "inline-block";
-
-    $("chatInput").placeholder =
-      "پیام خود را بنویسید...";
-
-    setStatus(
-      $("authStatus"),
-      "شما وارد حساب خود هستید.",
-      true
-    );
-
-  } else {
-
-    $("memberForm").classList.add("auth-hidden");
-
-    $("loginFromProfile").style.display =
-      "inline-block";
-
-    $("logoutBtn").style.display = "none";
-
-    $("profileName").textContent = "مهمان";
-
-    $("profilePhone").textContent =
-      "وارد نشده‌اید";
-
-    $("chatInput").placeholder =
-      "برای ارسال پیام ابتدا وارد شوید...";
-
-  }
-
-});
+    const userRef =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
 
 
-async function loadUserProfile(user) {
+    const snapshot =
+      await getDoc(userRef);
 
-  try {
 
-    const userRef = doc(
-      db,
-      "users",
-      user.uid
-    );
+    if(snapshot.exists()){
 
-    const snapshot = await getDoc(userRef);
+      const data =
+        snapshot.data();
 
-    if (snapshot.exists()) {
 
-      const data = snapshot.data();
-
-      $("profileName").textContent =
+      $("profileName")
+        .textContent =
         data.name || "عضو";
 
-      $("profilePhone").textContent =
-        data.phone || user.phoneNumber || "";
 
-      if (data.avatar) {
-        $("profileAvatar").src = data.avatar;
+      $("profilePhone")
+        .textContent =
+        data.phone ||
+        user.phoneNumber ||
+        "";
+
+
+      if(data.avatar){
+
+        $("profileAvatar")
+          .src =
+          data.avatar;
+
       }
 
-      if (data.name) {
-        $("name").value = data.name;
+
+      if(data.name){
+        $("name").value =
+          data.name;
       }
 
-      if (data.reason) {
-        $("reason").value = data.reason;
+
+      if(data.reason){
+        $("reason").value =
+          data.reason;
       }
 
-      if (data.message) {
-        $("message").value = data.message;
+
+      if(data.message){
+        $("message").value =
+          data.message;
       }
 
-    } else {
+    }
+    else{
 
-      $("profileName").textContent = "عضو جدید";
+      $("profileName")
+        .textContent =
+        "عضو جدید";
 
-      $("profilePhone").textContent =
+
+      $("profilePhone")
+        .textContent =
         user.phoneNumber || "";
 
     }
 
-  } catch (error) {
+  }
+  catch(error){
 
     console.error(error);
 
@@ -1917,204 +2063,299 @@ async function loadUserProfile(user) {
 }
 
 
-$("joinForm").addEventListener(
-  "submit",
-  async event => {
+$("joinForm")
+  .addEventListener(
+    "submit",
+    async event => {
 
-    event.preventDefault();
+      event.preventDefault();
 
-    if (!currentUser) {
 
-      setStatus(
-        $("joinMsg"),
-        "ابتدا با شماره موبایل وارد شوید."
-      );
+      if(!currentUser){
 
-      return;
+        setStatus(
+          $("joinMsg"),
+          "ابتدا با شماره موبایل وارد شوید."
+        );
+
+        return;
+
+      }
+
+
+      if(!$("agree").checked){
+
+        setStatus(
+          $("joinMsg"),
+          "لطفاً تعهدنامه را تأیید کنید."
+        );
+
+        return;
+
+      }
+
+
+      const signatureCanvas =
+        $("signature");
+
+
+      const signatureData =
+        signatureCanvas.toDataURL(
+          "image/png"
+        );
+
+
+      const name =
+        $("name")
+          .value
+          .trim();
+
+
+      const reason =
+        $("reason")
+          .value
+          .trim();
+
+
+      const message =
+        $("message")
+          .value
+          .trim();
+
+
+      if(!name || !reason){
+
+        setStatus(
+          $("joinMsg"),
+          "نام و دلیل پیوستن را وارد کنید."
+        );
+
+        return;
+
+      }
+
+
+      try{
+
+        setStatus(
+          $("joinMsg"),
+          "در حال ثبت اطلاعات..."
+        );
+
+
+        const userRef =
+          doc(
+            db,
+            "users",
+            currentUser.uid
+          );
+
+
+        await setDoc(
+          userRef,
+          {
+            uid:
+              currentUser.uid,
+
+            phone:
+              currentUser.phoneNumber || "",
+
+            name,
+            reason,
+            message,
+
+            signature:
+              signatureData,
+
+            joined:true,
+
+            joinedAt:
+              serverTimestamp(),
+
+            updatedAt:
+              serverTimestamp()
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+        await setDoc(
+          doc(
+            db,
+            "members",
+            currentUser.uid
+          ),
+          {
+            uid:
+              currentUser.uid,
+
+            name,
+
+            phone:
+              currentUser.phoneNumber || "",
+
+            joined:true,
+
+            createdAt:
+              serverTimestamp()
+
+          },
+          {
+            merge:true
+          }
+        );
+
+
+        $("profileName")
+          .textContent =
+          name;
+
+
+        $("profilePhone")
+          .textContent =
+          currentUser.phoneNumber || "";
+
+
+        setStatus(
+          $("joinMsg"),
+          "عضویت شما با موفقیت ثبت شد.",
+          true
+        );
+
+
+        updateSupportCount();
+
+      }
+      catch(error){
+
+        console.error(error);
+
+        setStatus(
+          $("joinMsg"),
+          "ثبت اطلاعات انجام نشد. قوانین Firestore را بررسی کنید."
+        );
+
+      }
+
     }
+  );
 
-    if (!$("agree").checked) {
 
-      setStatus(
-        $("joinMsg"),
-        "لطفاً تعهدنامه را تأیید کنید."
-      );
+$("logoutBtn")
+  .addEventListener(
+    "click",
+    async () => {
 
-      return;
-    }
+      try{
 
-    const signatureCanvas = $("signature");
+        await signOut(auth);
 
-    const signatureData =
-      signatureCanvas.toDataURL("image/png");
 
-    const name =
-      $("name").value.trim();
+        setStatus(
+          $("profileStatus"),
+          "با موفقیت خارج شدید.",
+          true
+        );
 
-    const reason =
-      $("reason").value.trim();
+      }
+      catch(error){
 
-    const message =
-      $("message").value.trim();
+        console.error(error);
 
-    if (!name || !reason) {
 
-      setStatus(
-        $("joinMsg"),
-        "نام و دلیل پیوستن را وارد کنید."
-      );
+        setStatus(
+          $("profileStatus"),
+          "خروج انجام نشد."
+        );
 
-      return;
-    }
-
-    try {
-
-      setStatus(
-        $("joinMsg"),
-        "در حال ثبت اطلاعات..."
-      );
-
-      const userRef = doc(
-        db,
-        "users",
-        currentUser.uid
-      );
-
-      await setDoc(
-        userRef,
-        {
-          uid: currentUser.uid,
-          phone: currentUser.phoneNumber || "",
-          name,
-          reason,
-          message,
-          signature: signatureData,
-          joined: true,
-          joinedAt: serverTimestamp(),
-          updatedAt: serverTimestamp()
-        },
-        {
-          merge: true
-        }
-      );
-
-      await setDoc(
-        doc(
-          db,
-          "members",
-          currentUser.uid
-        ),
-        {
-          uid: currentUser.uid,
-          name,
-          phone: currentUser.phoneNumber || "",
-          joined: true,
-          createdAt: serverTimestamp()
-        },
-        {
-          merge: true
-        }
-      );
-
-      $("profileName").textContent = name;
-
-      $("profilePhone").textContent =
-        currentUser.phoneNumber || "";
-
-      setStatus(
-        $("joinMsg"),
-        "عضویت شما با موفقیت ثبت شد.",
-        true
-      );
-
-      updateSupportCount();
-
-    } catch (error) {
-
-      console.error(error);
-
-      setStatus(
-        $("joinMsg"),
-        "ثبت اطلاعات انجام نشد. قوانین Firestore را بررسی کنید."
-      );
+      }
 
     }
-
-  }
-);
+  );
 
 
-$("logoutBtn").addEventListener(
-  "click",
-  async () => {
+$("loginFromProfile")
+  .addEventListener(
+    "click",
+    () => {
 
-    try {
+      showPage("join");
 
-      await signOut(auth);
-
-      setStatus(
-        $("profileStatus"),
-        "با موفقیت خارج شدید.",
-        true
-      );
-
-    } catch (error) {
-
-      console.error(error);
-
-      setStatus(
-        $("profileStatus"),
-        "خروج انجام نشد."
-      );
+      $("phoneNumber").focus();
 
     }
-
-  }
-);
+  );
 
 
-$("loginFromProfile").addEventListener(
-  "click",
-  () => {
-    showPage("join");
-    $("phoneNumber").focus();
-  }
-);
+const canvas =
+  $("signature");
+
+const ctx =
+  canvas.getContext("2d");
 
 
-const canvas = $("signature");
-const ctx = canvas.getContext("2d");
+function resizeSignatureCanvas(){
 
+  const rect =
+    canvas.getBoundingClientRect();
 
-function resizeSignatureCanvas() {
-
-  const rect = canvas.getBoundingClientRect();
 
   const ratio =
     window.devicePixelRatio || 1;
 
-  const oldData =
-    canvas.width > 0 && canvas.height > 0
-      ? canvas.toDataURL()
-      : null;
+
+  let oldData = null;
+
+
+  if(canvas.width > 0 && canvas.height > 0){
+
+    oldData =
+      canvas.toDataURL("image/png");
+
+  }
+
 
   canvas.width =
-    rect.width * ratio;
+    Math.max(
+      1,
+      Math.floor(rect.width * ratio)
+    );
+
 
   canvas.height =
-    rect.height * ratio;
+    Math.max(
+      1,
+      Math.floor(rect.height * ratio)
+    );
 
-  ctx.scale(ratio, ratio);
+
+  ctx.setTransform(
+    ratio,
+    0,
+    0,
+    ratio,
+    0,
+    0
+  );
+
 
   ctx.lineWidth = 2;
   ctx.lineCap = "round";
+  ctx.lineJoin = "round";
   ctx.strokeStyle = "#111";
 
-  if (oldData) {
 
-    const image = new Image();
+  if(oldData){
+
+    const image =
+      new Image();
+
 
     image.onload = () => {
+
       ctx.drawImage(
         image,
         0,
@@ -2122,9 +2363,13 @@ function resizeSignatureCanvas() {
         rect.width,
         rect.height
       );
+
     };
 
-    image.src = oldData;
+
+    image.src =
+      oldData;
+
   }
 
 }
@@ -2132,21 +2377,27 @@ function resizeSignatureCanvas() {
 
 resizeSignatureCanvas();
 
+
 window.addEventListener(
   "resize",
   resizeSignatureCanvas
 );
 
 
-function getCanvasPosition(event) {
+function getCanvasPosition(event){
 
   const rect =
     canvas.getBoundingClientRect();
 
+
   let clientX;
   let clientY;
 
-  if (event.touches && event.touches.length) {
+
+  if(
+    event.touches &&
+    event.touches.length
+  ){
 
     clientX =
       event.touches[0].clientX;
@@ -2154,31 +2405,45 @@ function getCanvasPosition(event) {
     clientY =
       event.touches[0].clientY;
 
-  } else {
+  }
+  else{
 
-    clientX = event.clientX;
-    clientY = event.clientY;
+    clientX =
+      event.clientX;
+
+    clientY =
+      event.clientY;
 
   }
 
+
   return {
-    x: clientX - rect.left,
-    y: clientY - rect.top
+
+    x:
+      clientX - rect.left,
+
+    y:
+      clientY - rect.top
+
   };
 
 }
 
 
-function startSignature(event) {
+function startSignature(event){
 
   event.preventDefault();
 
-  signatureDrawing = true;
+  signatureDrawing =
+    true;
+
 
   const pos =
     getCanvasPosition(event);
 
+
   ctx.beginPath();
+
 
   ctx.moveTo(
     pos.x,
@@ -2188,28 +2453,41 @@ function startSignature(event) {
 }
 
 
-function drawSignature(event) {
+function drawSignature(event){
 
-  if (!signatureDrawing) return;
+  if(!signatureDrawing){
+    return;
+  }
+
 
   event.preventDefault();
 
+
   const pos =
     getCanvasPosition(event);
+
 
   ctx.lineTo(
     pos.x,
     pos.y
   );
 
+
   ctx.stroke();
 
 }
 
 
-function stopSignature() {
+function stopSignature(){
 
-  signatureDrawing = false;
+  if(!signatureDrawing){
+    return;
+  }
+
+
+  signatureDrawing =
+    false;
+
 
   ctx.closePath();
 
@@ -2221,27 +2499,36 @@ canvas.addEventListener(
   startSignature
 );
 
+
 canvas.addEventListener(
   "mousemove",
   drawSignature
 );
+
 
 window.addEventListener(
   "mouseup",
   stopSignature
 );
 
+
 canvas.addEventListener(
   "touchstart",
   startSignature,
-  { passive:false }
+  {
+    passive:false
+  }
 );
+
 
 canvas.addEventListener(
   "touchmove",
   drawSignature,
-  { passive:false }
+  {
+    passive:false
+  }
 );
+
 
 window.addEventListener(
   "touchend",
@@ -2249,34 +2536,51 @@ window.addEventListener(
 );
 
 
-$("clear").addEventListener(
-  "click",
-  () => {
+$("clear")
+  .addEventListener(
+    "click",
+    () => {
 
-    ctx.clearRect(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+      );
 
-  }
-);
+      ctx.setTransform(
+        window.devicePixelRatio || 1,
+        0,
+        0,
+        window.devicePixelRatio || 1,
+        0,
+        0
+      );
+
+    }
+  );
 
 
-async function updateSupportCount() {
+async function updateSupportCount(){
 
-  try {
+  try{
 
     const membersSnapshot =
       await getDocs(
-        collection(db, "members")
+        collection(
+          db,
+          "members"
+        )
       );
 
-    $("supportCount").textContent =
-      membersSnapshot.size.toLocaleString("fa-IR");
 
-  } catch (error) {
+    $("supportCount")
+      .textContent =
+      membersSnapshot.size
+        .toLocaleString("fa-IR");
+
+  }
+  catch(error){
 
     console.error(error);
 
@@ -2285,30 +2589,45 @@ async function updateSupportCount() {
 }
 
 
-async function loadTotalAmount() {
+async function loadTotalAmount(){
 
-  try {
+  try{
 
     const supportSnapshot =
       await getDocs(
-        collection(db, "support")
+        collection(
+          db,
+          "support"
+        )
       );
+
 
     let total = 0;
 
-    supportSnapshot.forEach(item => {
 
-      const data = item.data();
+    supportSnapshot.forEach(
+      item => {
 
-      total += Number(data.amount || 0);
+        const data =
+          item.data();
 
-    });
 
-    $("totalAmount").textContent =
+        total +=
+          Number(
+            data.amount || 0
+          );
+
+      }
+    );
+
+
+    $("totalAmount")
+      .textContent =
       total.toLocaleString("fa-IR") +
       " تومان";
 
-  } catch (error) {
+  }
+  catch(error){
 
     console.error(error);
 
@@ -2325,48 +2644,65 @@ document.querySelectorAll(
     "click",
     async () => {
 
-      if (!currentUser) {
+      if(!currentUser){
 
         showPage("join");
+
 
         setStatus(
           $("authStatus"),
           "برای ثبت حمایت ابتدا وارد شوید."
         );
 
+
+        return;
+
+      }
+
+
+      const amount =
+        Number(
+          button.dataset.support
+        );
+
+
+      if(!amount){
         return;
       }
 
-      const amount =
-        Number(button.dataset.support);
 
-      if (!amount) return;
-
-      try {
+      try{
 
         await addDoc(
-          collection(db, "support"),
+          collection(
+            db,
+            "support"
+          ),
           {
-            uid: currentUser.uid,
+            uid:
+              currentUser.uid,
+
             amount,
-            createdAt: serverTimestamp()
+
+            createdAt:
+              serverTimestamp()
+
           }
         );
 
+
         await loadTotalAmount();
 
-        setStatus(
-          $("chatStatus"),
-          ""
-        );
 
         alert(
           "مبلغ حمایت شما ثبت شد."
         );
 
-      } catch (error) {
+      }
+      catch(error){
 
         console.error(error);
+
 
         alert(
           "ثبت حمایت انجام نشد."
@@ -2380,28 +2716,40 @@ document.querySelectorAll(
 });
 
 
-async function sendChatMessage() {
+async function sendChatMessage(){
 
-  if (!currentUser) {
+  if(!currentUser){
 
     setStatus(
       $("chatStatus"),
       "برای ارسال پیام ابتدا وارد شوید."
     );
 
+
     return;
+
   }
 
-  const input = $("chatInput");
+
+  const input =
+    $("chatInput");
+
 
   const text =
     input.value.trim();
 
-  if (!text) return;
 
-  if (text.length > 500) return;
+  if(!text){
+    return;
+  }
 
-  try {
+
+  if(text.length > 500){
+    return;
+  }
+
+
+  try{
 
     const userSnapshot =
       await getDoc(
@@ -2412,25 +2760,38 @@ async function sendChatMessage() {
         )
       );
 
+
     const userData =
       userSnapshot.exists()
         ? userSnapshot.data()
         : {};
 
+
     await addDoc(
-      collection(db, "messages"),
+      collection(
+        db,
+        "messages"
+      ),
       {
-        uid: currentUser.uid,
+
+        uid:
+          currentUser.uid,
+
         name:
           userData.name ||
           "عضو",
+
         text,
+
         createdAt:
           serverTimestamp()
+
       }
     );
 
+
     input.value = "";
+
 
     setStatus(
       $("chatStatus"),
@@ -2438,9 +2799,11 @@ async function sendChatMessage() {
       true
     );
 
-  } catch (error) {
+  }
+  catch(error){
 
     console.error(error);
+
 
     setStatus(
       $("chatStatus"),
@@ -2452,113 +2815,176 @@ async function sendChatMessage() {
 }
 
 
-$("sendChat").addEventListener(
-  "click",
-  sendChatMessage
-);
+$("sendChat")
+  .addEventListener(
+    "click",
+    sendChatMessage
+  );
 
 
-$("chatInput").addEventListener(
-  "keydown",
-  event => {
+$("chatInput")
+  .addEventListener(
+    "keydown",
+    event => {
 
-    if (
-      event.key === "Enter" &&
-      !event.shiftKey
-    ) {
+      if(
+        event.key === "Enter" &&
+        !event.shiftKey
+      ){
 
-      event.preventDefault();
+        event.preventDefault();
 
-      sendChatMessage();
+        sendChatMessage();
+
+      }
 
     }
-
-  }
-);
+  );
 
 
-function escapeHTML(value) {
+function escapeHTML(value){
 
   return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
 
 }
 
 
-function renderMessage(data) {
+function renderMessage(data){
 
-  const box = $("chatbox");
+  const box =
+    $("chatbox");
+
 
   const message =
     document.createElement("div");
 
+
   const isMe =
     currentUser &&
-    data.uid === currentUser.uid;
+    data.uid ===
+    currentUser.uid;
+
 
   message.className =
-    isMe ? "msg me" : "msg";
+    isMe
+      ? "msg me"
+      : "msg";
+
 
   const name =
     escapeHTML(
-      data.name || "عضو"
+      data.name ||
+      "عضو"
     );
+
 
   const text =
     escapeHTML(
-      data.text || ""
+      data.text ||
+      ""
     );
+
 
   message.innerHTML =
     `<strong>${name}</strong><br>${text}`;
 
-  box.appendChild(message);
+
+  box.appendChild(
+    message
+  );
 
 }
 
 
-function loadChat() {
+function loadChat(){
 
-  if (unsubscribeChat) {
+  if(unsubscribeChat){
+
     unsubscribeChat();
-    unsubscribeChat = null;
+
+    unsubscribeChat =
+      null;
+
   }
+
 
   const chatQuery =
     query(
-      collection(db, "messages"),
-      orderBy("createdAt", "asc"),
+
+      collection(
+        db,
+        "messages"
+      ),
+
+      orderBy(
+        "createdAt",
+        "asc"
+      ),
+
       limit(100)
+
     );
+
 
   unsubscribeChat =
     onSnapshot(
+
       chatQuery,
+
       snapshot => {
 
-        const box = $("chatbox");
+        const box =
+          $("chatbox");
+
 
         box.innerHTML = "";
 
-        snapshot.forEach(docSnap => {
 
-          renderMessage(
-            docSnap.data()
-          );
+        snapshot.forEach(
+          docSnap => {
 
-        });
+            renderMessage(
+              docSnap.data()
+            );
+
+          }
+        );
+
 
         box.scrollTop =
           box.scrollHeight;
 
       },
+
       error => {
 
         console.error(error);
+
 
         setStatus(
           $("chatStatus"),
@@ -2566,6 +2992,7 @@ function loadChat() {
         );
 
       }
+
     );
 
 }
@@ -2573,3 +3000,8 @@ function loadChat() {
 
 updateSupportCount();
 loadTotalAmount();
+
+</script>
+
+</body>
+</html>
