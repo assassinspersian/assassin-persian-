@@ -3000,6 +3000,27 @@ function loadChat(){
 
 updateSupportCount();
 loadTotalAmount();
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDF9r_4yIEYSAxVHUrnocJiM3MFfyQehUw",
+  authDomain: "assassin-creed-persian.firebaseapp.com",
+  projectId: "assassin-creed-persian",
+  storageBucket: "assassin-creed-persian.firebasestorage.app",
+  messagingSenderId: "885568254577",
+  appId: "1:885568254577:web:ad88dfd85305b8502561d0",
+  measurementId: "G-CWFFT0RQDD"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);assassin persian 
 
 </script>
 
